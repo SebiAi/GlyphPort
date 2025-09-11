@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="deploymentTargetSelector">
+    <selectionStates>
+      <SelectionState runConfigName="app">
+        <option name="selectionMode" value="DROPDOWN" />
+        <DropdownSelection timestamp="2025-09-11T11:58:23.583700773Z">
+          <Target type="DEFAULT_BOOT">
+            <handle>
+              <DeviceId pluginId="LocalEmulator" identifier="path=/home/sebiai/.android/avd/Pixel_6.avd" />
+            </handle>
+          </Target>
+        </DropdownSelection>
+        <DialogSelection />
+      </SelectionState>
+    </selectionStates>
+  </component>
+</project>
