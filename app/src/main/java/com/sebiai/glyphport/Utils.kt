@@ -1,6 +1,9 @@
 package com.sebiai.glyphport
 
+import android.content.Context
+import android.net.Uri
 import android.os.Build
+import android.provider.OpenableColumns
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -33,4 +36,13 @@ fun currentPhoneModel(): PhoneModel? {
         "A024" -> PhoneModel.PHONE3
         else -> null
     }
+}
+
+fun getFileName(context: Context, uri: Uri): String {
+    // https://developer.android.com/training/secure-file-sharing/retrieve-info#RetrieveFileInfo
+    return context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+        val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        cursor.moveToFirst()
+        cursor.getString(nameIndex)
+    }.orEmpty()
 }
