@@ -1,6 +1,25 @@
 <resources>
     <string name="app_name">GlyphPort</string>
 
+    <!-- General -->
+    <string name="ok_confirmation">OK</string>
+
+    <!-- Composition validation -->
+    <string name="composition_validation_io_error">Could not read the file. Please try again.\nIf this error persists, please contact the developer.</string>
+    <string name="composition_validation_invalid_extension">Invalid extension - only \'.ogg\' files are supported.</string>
+    <string name="composition_validation_invalid_codec_or_missing_metadata">Invalid codec or required light data not found. Is this really a composition?</string>
+    <string name="composition_validation_invalid_metadata">Invalid light data. Is this really a composition?</string>
+    <string name="composition_validation_composition_format_too_new">This composition format is not supported yet. Please make sure that you are on the latest version.</string>
+    <string name="composition_validation_unknown_or_unsupported_phone_model">This composition was made for an unknown or unsupported device: "%s"\nPlease make sure that you are on the latest version.</string>
+
+    <!-- Start Screen -->
+    <string name="button_select_composition">Select Composition</string>
+    <string name="supported_formats_hint">Supported formats: ogg</string>
+    <string name="button_next">Next</string>
+    <string name="file_name_table_heading">File</string>
+    <string name="file_made_for_phone_table_heading">Made for</string>
+    <string name="invalid_composition_dialog_title">Invalid Composition</string>
+
     <!-- Content description stuff -->
     <string name="content_description_top_app_bar_back_arrow_icon">Navigate up</string>
 </resources>

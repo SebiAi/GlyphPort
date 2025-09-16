@@ -7,6 +7,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.sebiai.glyphport.AppViewModel
 import com.sebiai.glyphport.screenPaddingModifier
+import com.sebiai.glyphport.screens.StartScreen
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -23,6 +24,11 @@ fun NavGraphBuilder.startScreenDestination(
     composable<StartNavRoute> {
         val appState = appViewModel.appState.collectAsStateWithLifecycle().value
 
-        /* TODO: Implement StartScreen */
+        StartScreen(
+            modifier = screenPaddingModifier.fillMaxSize(),
+            composition = appState.selectedComposition,
+            updateSelectedComposition = appViewModel::updateSelectedComposition,
+            onNextButtonClicked = onNextButtonClicked
+        )
     }
 }
