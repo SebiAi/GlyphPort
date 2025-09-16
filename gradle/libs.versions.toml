@@ -9,6 +9,7 @@ lifecycleRuntimeKtx = "2.9.3"
 activityCompose = "1.11.0"
 composeBom = "2025.09.00"
 navigationCompose = "2.9.4"
+smartException = "0.2.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -31,6 +32,9 @@ androidx-navigation-compose = { group = "androidx.navigation", name = "navigatio
 
 # More Material Icons
 androidx-material-icons-extended = { group = "androidx.compose.material", name = "material-icons-extended" }
+
+# FFmpegKit dependency
+smart-exception = { group = "com.arthenica", name = "smart-exception-java", version.ref = "smartException" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

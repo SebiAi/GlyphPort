@@ -4,9 +4,12 @@ import android.content.Context
 import android.net.Uri
 import android.os.Build
 import android.provider.OpenableColumns
+import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.arthenica.ffmpegkit.AbstractSession
+import com.arthenica.ffmpegkit.ReturnCode
 
 val screenPaddingModifier = Modifier.padding(12.dp)
 
@@ -35,6 +38,28 @@ fun currentPhoneModel(): PhoneModel? {
         "A059", "A059P" -> PhoneModel.PHONE3A_AND_PRO
         "A024" -> PhoneModel.PHONE3
         else -> null
+    }
+}
+
+class FFmpegKitSessionFailureExeption(message: String): RuntimeException(message)
+fun <T: AbstractSession> safeHandleFFmpegKitSession(
+    session: T,
+    onSuccess: (T) -> Unit,
+    onCancel: (T) -> Unit = {},
+    onFailure: (T) -> Unit = { throw FFmpegKitSessionFailureExeption(it.failStackTrace) }
+) {
+    val tag = "FFmpegKitSessionHandler"
+
+    when (session.returnCode.value) {
+        ReturnCode.SUCCESS -> { onSuccess(session) }
+        ReturnCode.CANCEL -> {
+            Log.i(tag, "Command '${session.command}' canceled")
+            onCancel(session)
+        }
+        else -> {
+            Log.e(tag, "Command '${session.command}' failed with state ${session.state} and rc ${session.returnCode}.${session.failStackTrace}")
+            onFailure(session)
+        }
     }
 }
 

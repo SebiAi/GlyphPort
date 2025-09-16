@@ -52,6 +52,10 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material.icons.extended)
+    // FFmpegKit
+    implementation(files("libs/ffmpeg-kit-audio-lgpl-16kb-all_arch.aar"))
+    implementation(libs.smart.exception)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
