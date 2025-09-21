@@ -3,16 +3,23 @@ package com.sebiai.glyphport.dataclasses
 import android.content.Context
 import androidx.annotation.StringRes
 import com.sebiai.glyphport.PhoneModel
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.withContext
 
-interface LightDataTransformer {
+abstract class LightDataTransformer(
+    private val ioDispatcher: CoroutineDispatcher
+) {
     @get:StringRes
-    val nameStringRes: Int
+    protected abstract val nameStringRes: Int
     @get:StringRes
-    val descriptionStringRes: Int
+    protected abstract val descriptionStringRes: Int
 
     fun getName(context: Context): String = context.getString(nameStringRes)
     fun getDescription(context: Context): String = context.getString(descriptionStringRes)
 
-    fun transform(lightData: CompositionLightData): CompositionLightData
-    fun canHandle(handles: PhoneModel, output: PhoneModel): Boolean
+    suspend fun transform(lightData: CompositionLightData): CompositionLightData = withContext(ioDispatcher) {
+        return@withContext transformImpl(lightData)
+    }
+    protected abstract fun transformImpl(lightData: CompositionLightData): CompositionLightData
+    abstract fun canHandle(handles: PhoneModel, output: PhoneModel): Boolean
 }
