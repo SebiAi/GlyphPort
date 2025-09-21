@@ -45,6 +45,7 @@ import androidx.lifecycle.lifecycleScope
 import com.sebiai.glyphport.PhoneModel
 import com.sebiai.glyphport.R
 import com.sebiai.glyphport.dataclasses.Composition
+import com.sebiai.glyphport.dataclasses.CompositionLightData
 import com.sebiai.glyphport.dataclasses.CompositionValidator
 import com.sebiai.glyphport.dataclasses.DecodedCompositionMetadata
 import com.sebiai.glyphport.dataclasses.ValidationError
@@ -217,7 +218,7 @@ fun StartScreen(
                                 Text(
                                     modifier = Modifier.weight(0.75f),
                                     color = valueColor,
-                                    text = if (showColumnsRow) composition.getColsSize().toString() else String(),
+                                    text = if (showColumnsRow) composition.lightData.columns.toString() else String(),
                                     textAlign = TextAlign.Right
                                 )
                             }
@@ -245,7 +246,7 @@ fun StartScreen(
 private class CompositionPreviewImpl(
     override val uri: Uri,
     override val metadata: DecodedCompositionMetadata,
-    override val parsedLightData: List<List<UInt>>,
+    override val lightData: CompositionLightData,
     override val phoneModel: PhoneModel
 ) : Composition
 @PreviewLightDark
@@ -259,7 +260,7 @@ fun StartScreenPreview() {
                 composition = CompositionPreviewImpl(
                     uri = Uri.EMPTY,
                     metadata = DecodedCompositionMetadata(),
-                    parsedLightData = listOf(listOf(0u, 0u, 0u, 0u, 0u)),
+                    lightData = CompositionLightData(listOf(listOf(0u, 0u, 0u, 0u, 0u))),
                     phoneModel = PhoneModel.PHONE1
                 ),
                 updateSelectedComposition = {},

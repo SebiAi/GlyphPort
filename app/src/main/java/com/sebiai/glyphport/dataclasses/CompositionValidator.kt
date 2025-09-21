@@ -26,7 +26,7 @@ sealed class ValidationError(val msg: String) {
 private class CompositionImpl(
     override val uri: Uri,
     override val metadata: DecodedCompositionMetadata,
-    override val parsedLightData: List<List<UInt>>,
+    override val lightData: CompositionLightData,
     override val phoneModel: PhoneModel
 ) : Composition
 
@@ -79,25 +79,24 @@ class CompositionValidator {
             }
 
             // Check light data
-            val lightData: List<List<UInt>>
+            val rawLightData: List<List<UInt>>
             try {
-                lightData = parseLightData(decodedMetadata.author)
+                rawLightData = parseLightData(decodedMetadata.author)
             } catch (_: NumberFormatException) {
                 return@withContext ValidationResult.Failure(ValidationError.InvalidMetadata("Converting brightness values of light data failed"))
             }
-            if (lightData.isEmpty()) {
+
+            val lightData: CompositionLightData
+            try {
+                lightData = CompositionLightData(rawLightData)
+            } catch (_: CompositionLightData.EmptyLightDataException) {
                 return@withContext ValidationResult.Failure(ValidationError.InvalidMetadata("Empty light data"))
-            }
-            val firstSize = lightData.first().size.toUInt()
-            if (firstSize !in phoneModel.supportedZones)
-                return@withContext ValidationResult.Failure(ValidationError.InvalidMetadata("Light data size does not match with phone model. Got: $firstSize, Expected: ${phoneModel.supportedZones}"))
-            if (lightData.any { it.size.toUInt() != firstSize })
+            } catch (_: CompositionLightData.InconsistentDataLength) {
                 return@withContext ValidationResult.Failure(ValidationError.InvalidMetadata("Different lengths for lines in light data"))
-            // Since it is an UInt it can't be less than 0 => only upper range check
-            // Technically the highest value should be 4095 but some compositions
-            // use 4096 as upper range??
-            if (lightData.any { it.any { value -> value > 4096u } })
-                return@withContext ValidationResult.Failure(ValidationError.InvalidMetadata("Out of range brightness in light data"))
+            }
+
+            if (lightData.columns.toUInt() !in phoneModel.supportedZones)
+                return@withContext ValidationResult.Failure(ValidationError.InvalidMetadata("Light data size does not match with phone model. Got: ${lightData.columns.toUInt()}, Expected: ${phoneModel.supportedZones}"))
 
             return@withContext ValidationResult.Success(CompositionImpl(uri, decodedMetadata, lightData, phoneModel))
         }
