@@ -18,6 +18,7 @@
     <string name="button_next">Next</string>
     <string name="file_name_table_heading">File</string>
     <string name="file_made_for_phone_table_heading">Made for</string>
+    <string name="file_number_of_columns_heading">Columns</string>
     <string name="invalid_composition_dialog_title">Invalid Composition</string>
 
     <!-- Content description stuff -->

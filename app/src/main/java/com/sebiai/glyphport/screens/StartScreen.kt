@@ -4,6 +4,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -197,6 +198,30 @@ fun StartScreen(
                             text = composition?.phoneModel?.phoneName ?: "-",
                             textAlign = TextAlign.Right
                         )
+                    }
+                    val showColumnsRow = composition?.phoneModel == PhoneModel.PHONE1
+                    AnimatedVisibility(
+                        visible = showColumnsRow
+                    ) {
+                        Column {
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                Text(
+                                    modifier = Modifier.weight(0.25f),
+                                    text = stringResource(R.string.file_number_of_columns_heading),
+                                    textAlign = TextAlign.Left
+                                )
+                                Text(
+                                    modifier = Modifier.weight(0.75f),
+                                    color = valueColor,
+                                    text = if (showColumnsRow) composition.getColsSize().toString() else String(),
+                                    textAlign = TextAlign.Right
+                                )
+                            }
+                        }
                     }
                 }
             }
