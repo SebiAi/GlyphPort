@@ -33,7 +33,7 @@ class CompositionLightData(
     }
 
     fun getRow(rowIndex: Int): List<UInt> {
-        assert(rowIndex >= 0)
+        require(rowIndex >= 0) { "rowIndex must be 0 or greater" }
         if (rowIndex >= rows) throw IndexOutOfBoundsException()
 
         val fromIndex = rowIndex * rowIndex
