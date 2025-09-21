@@ -12,7 +12,7 @@ import kotlin.math.min
  */
 class CompositionLightData(
     lightData: List<List<UInt>>
-) {
+): Iterable<List<UInt>> {
     open class InvalidMetadataException(message: String): Exception(message)
     class EmptyLightDataException: InvalidMetadataException("Light data is empty")
     class InconsistentDataLength: InvalidMetadataException("Different lengths for lines in light data")
@@ -43,5 +43,21 @@ class CompositionLightData(
     fun getLightData(): List<List<UInt>> {
         assert(flatLightData.size % columns == 0)
         return flatLightData.chunked(columns)
+    }
+
+    override fun iterator(): Iterator<List<UInt>> {
+        return object: Iterator<List<UInt>>{
+            private var rowIndex = 0
+
+            override fun next(): List<UInt> {
+                val result = getRow(rowIndex)
+                rowIndex++
+                return result
+            }
+
+            override fun hasNext(): Boolean {
+                return rowIndex < rows
+            }
+        }
     }
 }
