@@ -63,7 +63,7 @@ fun StartScreen(
     var invalidCompositionDialogReason by rememberSaveable { mutableStateOf("") }
 
     val pickCompositionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.OpenDocument()
+        ActivityResultContracts.GetContent()
     ) { it?.let {
         Log.d("CompositionSelector", "Picked file: ${it.path}")
         lifecycleOwner.lifecycleScope.launch {
@@ -120,7 +120,7 @@ fun StartScreen(
         ) {
             Button(
                 onClick = {
-                    pickCompositionLauncher.launch(arrayOf("audio/ogg"))
+                    pickCompositionLauncher.launch("audio/ogg")
                 },
                 shape = RoundedCornerShape(30)
             ) {
