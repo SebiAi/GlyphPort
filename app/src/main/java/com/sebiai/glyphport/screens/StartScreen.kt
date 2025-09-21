@@ -1,5 +1,6 @@
 package com.sebiai.glyphport.screens
 
+import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -40,9 +41,11 @@ import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import com.sebiai.glyphport.PhoneModel
 import com.sebiai.glyphport.R
 import com.sebiai.glyphport.dataclasses.Composition
 import com.sebiai.glyphport.dataclasses.CompositionValidator
+import com.sebiai.glyphport.dataclasses.DecodedCompositionMetadata
 import com.sebiai.glyphport.dataclasses.ValidationError
 import com.sebiai.glyphport.dataclasses.ValidationResult
 import com.sebiai.glyphport.getFileName
@@ -214,6 +217,12 @@ fun StartScreen(
     }
 }
 
+private class CompositionPreviewImpl(
+    override val uri: Uri,
+    override val metadata: DecodedCompositionMetadata,
+    override val parsedLightData: List<List<UInt>>,
+    override val phoneModel: PhoneModel
+) : Composition
 @PreviewLightDark
 @Composable
 fun StartScreenPreview() {
@@ -222,7 +231,12 @@ fun StartScreenPreview() {
             StartScreen(
                 modifier = screenPaddingModifier
                     .fillMaxSize(),
-                composition = null,
+                composition = CompositionPreviewImpl(
+                    uri = Uri.EMPTY,
+                    metadata = DecodedCompositionMetadata(),
+                    parsedLightData = listOf(listOf(0u, 0u, 0u, 0u, 0u)),
+                    phoneModel = PhoneModel.PHONE1
+                ),
                 updateSelectedComposition = {},
                 onNextButtonClicked = {}
             )
