@@ -8,4 +8,8 @@ interface Composition {
     val metadata: DecodedCompositionMetadata
     val parsedLightData: List<List<UInt>>
     val phoneModel: PhoneModel
+
+    fun getColsSize(): Int {
+        return if (parsedLightData.isEmpty()) 0 else parsedLightData.first().size
+    }
 }
