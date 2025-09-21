@@ -7,6 +7,7 @@ import com.arthenica.ffmpegkit.FFmpegKitConfig
 import com.arthenica.ffmpegkit.FFprobeKit
 import com.sebiai.glyphport.PhoneModel
 import com.sebiai.glyphport.safeHandleFFmpegKitSession
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -34,7 +35,7 @@ class CompositionValidator {
     companion object {
         private const val TAG = "CompositionValidator"
 
-        suspend fun validate(context: Context, uri: Uri): ValidationResult = withContext(Dispatchers.IO) {
+        suspend fun validate(context: Context, uri: Uri, ioDispatcher: CoroutineDispatcher = Dispatchers.IO): ValidationResult = withContext(ioDispatcher) {
             val encodedMetadata: EncodedCompositionMetadata
             try {
                 // Test extension - this works because the mime type is determined via the file extension
