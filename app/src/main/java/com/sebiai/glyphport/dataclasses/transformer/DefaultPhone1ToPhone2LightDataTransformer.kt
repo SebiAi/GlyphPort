@@ -1,0 +1,65 @@
+package com.sebiai.glyphport.dataclasses.transformer
+
+import com.sebiai.glyphport.PhoneModel
+import com.sebiai.glyphport.R
+import com.sebiai.glyphport.dataclasses.CompositionLightData
+import com.sebiai.glyphport.dataclasses.LightDataTransformer
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+
+class DefaultPhone1ToPhone2LightDataTransformer(ioDispatcher: CoroutineDispatcher = Dispatchers.IO): LightDataTransformer(ioDispatcher) {
+    override val nameStringRes: Int
+        get() = R.string.default_light_data_transformer_name
+    override val descriptionStringRes: Int
+        get() = R.string.default_light_data_transfer_description
+
+    override fun transformImpl(lightData: CompositionLightData): CompositionLightData {
+        // Sanity check
+        assert(5u in PhoneModel.PHONE1.supportedZones && 15u in PhoneModel.PHONE1.supportedZones && PhoneModel.PHONE1.supportedZones .size == 2)
+
+        require(lightData.columns.toUInt() in PhoneModel.PHONE1.supportedZones)
+        if (lightData.columns == 5) {
+            return transform15Cols(transform5To15Cols(lightData))
+        }
+        // 15Cols
+        return transform15Cols(lightData)
+    }
+
+    private fun transform5To15Cols(lightData: CompositionLightData): CompositionLightData {
+        return CompositionLightData(
+            lightData.map { row ->
+                buildList {
+                    add(row[0]) // Camera - stays at index 0
+                    add(row[1]) // Diagonal - stays at index 1
+                    repeat(4) { add(row[2]) } // Battery - repeated 4 times (index 2-5, the 4 zones in Battery)
+                    add(row[4]) // USB Dot - is moved from index 4 to index 6
+                    repeat(8) { add(row[3]) } // USB Line - is moved from index 5 to indexes 7-14, the 8 Zones in USB Line
+                }
+            }.toList()
+        )
+    }
+
+    private fun transform15Cols(lightData: CompositionLightData): CompositionLightData {
+        return CompositionLightData(
+            lightData.map { row ->
+                buildList {
+                    repeat (2) { add(row[0]) } // Camera - index 0-1, Camera top/bottom
+                    add(row[1]) // Diagonal - moves to 2
+                    repeat(16) { add(row[4]) } // Battery top right moves to 3-18, the 16 Zones in the Battery top right
+                    repeat(2) { add(row[5]) } // Battery top left moves to 19-20, the Battery top left and top vertical (left side)
+                    add(row[2]) // Battery bottom left moves to 21
+                    repeat(2) { add(row[3]) } // Battery bottom right moves to 22-23, the Battery bottom right and bottom vertical (right side)
+                    add(row[6]) // USB Dot moves to 24
+                    addAll(row.subList(7, 15)) // USB Line (7-14) moves to 25-32
+                }
+            }
+        )
+    }
+
+    override fun canHandle(
+        handles: PhoneModel,
+        output: PhoneModel
+    ): Boolean {
+        return handles == PhoneModel.PHONE1 && output == PhoneModel.PHONE2
+    }
+}

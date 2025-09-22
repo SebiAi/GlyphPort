@@ -23,4 +23,8 @@
 
     <!-- Content description stuff -->
     <string name="content_description_top_app_bar_back_arrow_icon">Navigate up</string>
+
+    <!-- Transformer -->
+    <string name="default_light_data_transformer_name">The Classic</string>
+    <string name="default_light_data_transfer_description">A simple classic port of the composition.</string>
 </resources>
