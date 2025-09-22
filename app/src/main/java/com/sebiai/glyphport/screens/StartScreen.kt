@@ -119,7 +119,7 @@ fun StartScreen(
         modifier = modifier
     ) {
         Column(
-            modifier.weight(1f),
+            modifier = Modifier.weight(1f),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -160,7 +160,9 @@ fun StartScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             Card(
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp)
             ) {
                 Column(
                     modifier = Modifier.padding(12.dp)
