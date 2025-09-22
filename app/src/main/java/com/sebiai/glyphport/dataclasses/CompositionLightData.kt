@@ -35,7 +35,7 @@ class CompositionLightData(
         require(rowIndex >= 0) { "rowIndex must be 0 or greater" }
         if (rowIndex >= rows) throw IndexOutOfBoundsException()
 
-        val fromIndex = rowIndex * rowIndex
+        val fromIndex = rowIndex * columns
         return flatLightData.subList(fromIndex, fromIndex + columns)
     }
 
