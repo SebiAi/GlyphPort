@@ -59,4 +59,26 @@ class CompositionLightData(
             }
         }
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as CompositionLightData
+
+        if (columns != other.columns) return false
+        if (rows != other.rows) return false
+        if (flatLightData != other.flatLightData) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = columns
+        result = 31 * result + rows
+        result = 31 * result + flatLightData.hashCode()
+        return result
+    }
+
+
 }
