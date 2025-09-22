@@ -176,13 +176,13 @@ fun StartScreen(
                         Text(
                             modifier = Modifier.weight(0.25f),
                             text = stringResource(R.string.file_name_table_heading),
-                            textAlign = TextAlign.Left
+                            textAlign = TextAlign.Start
                         )
                         Text(
                             modifier = Modifier.weight(0.75f),
                             color = valueColor,
                             text = composition?.let { getFileName(LocalContext.current, it.uri) } ?: "-",
-                            textAlign = TextAlign.Right
+                            textAlign = TextAlign.End
                         )
                     }
                     Spacer(modifier = Modifier.height(8.dp))
@@ -193,13 +193,13 @@ fun StartScreen(
                         Text(
                             modifier = Modifier.weight(0.25f),
                             text = stringResource(R.string.file_made_for_phone_table_heading),
-                            textAlign = TextAlign.Left
+                            textAlign = TextAlign.Start
                         )
                         Text(
                             modifier = Modifier.weight(0.75f),
                             color = valueColor,
                             text = composition?.phoneModel?.phoneName ?: "-",
-                            textAlign = TextAlign.Right
+                            textAlign = TextAlign.End
                         )
                     }
                     val showColumnsRow = composition?.phoneModel == PhoneModel.PHONE1
@@ -215,13 +215,13 @@ fun StartScreen(
                                 Text(
                                     modifier = Modifier.weight(0.25f),
                                     text = stringResource(R.string.file_number_of_columns_heading),
-                                    textAlign = TextAlign.Left
+                                    textAlign = TextAlign.Start
                                 )
                                 Text(
                                     modifier = Modifier.weight(0.75f),
                                     color = valueColor,
                                     text = if (showColumnsRow) composition.lightData.columns.toString() else String(),
-                                    textAlign = TextAlign.Right
+                                    textAlign = TextAlign.End
                                 )
                             }
                         }
