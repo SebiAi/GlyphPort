@@ -3,7 +3,6 @@ package com.sebiai.glyphport.dataclasses
 import kotlin.math.min
 
 /**
- * @constructor Construct a new instance of `CompositionLightData`.
  * @property lightData The raw light data. Outer list must contains all rows, inner list must
  * contain the elements in the row.
  *
