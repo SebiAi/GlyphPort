@@ -44,6 +44,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.sebiai.glyphport.PhoneModel
 import com.sebiai.glyphport.R
+import com.sebiai.glyphport.composables.EndAlignedSingleTextButtonRow
 import com.sebiai.glyphport.dataclasses.Composition
 import com.sebiai.glyphport.dataclasses.CompositionLightData
 import com.sebiai.glyphport.dataclasses.CompositionValidator
@@ -229,19 +230,12 @@ fun StartScreen(
                 }
             }
         }
-        Row(
-            modifier = Modifier.padding(end = 6.dp, bottom = 6.dp).fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
-        ) {
-            Button(
-                enabled = composition != null,
-                onClick = onNextButtonClicked
-            ) {
-                Text(
-                    text = stringResource(R.string.button_next)
-                )
-            }
-        }
+        EndAlignedSingleTextButtonRow(
+            modifier = Modifier.padding(end = 6.dp, bottom = 6.dp),
+            text = stringResource(R.string.button_next),
+            onClick = onNextButtonClicked,
+            enabled = composition != null
+        )
     }
 }
 
