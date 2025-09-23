@@ -166,7 +166,7 @@ fun StartScreen(
                     .fillMaxWidth()
                     .padding(horizontal = 8.dp),
                 colors = CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surfaceContainer
+                    containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
                 )
             ) {
                 Column(
