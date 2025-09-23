@@ -1,6 +1,7 @@
 package com.sebiai.glyphport.navigation
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -15,7 +16,11 @@ import androidx.navigation.compose.NavHost
 import com.sebiai.glyphport.AppViewModel
 import com.sebiai.glyphport.R
 import com.sebiai.glyphport.navigation.routes.StartNavRoute
+import com.sebiai.glyphport.navigation.routes.TransformerCollectionSelectionNavRoute
+import com.sebiai.glyphport.navigation.routes.navigateToStartScreenWithPopUp
+import com.sebiai.glyphport.navigation.routes.navigateToTransformerCollectionSelectionScreen
 import com.sebiai.glyphport.navigation.routes.startScreenDestination
+import com.sebiai.glyphport.navigation.routes.transformerCollectionSelectionScreenDestination
 
 fun getTitleForRoute(context: Context, route: String): String {
     // routes have the qualifiedName of the class plus a url like arguments
@@ -23,6 +28,7 @@ fun getTitleForRoute(context: Context, route: String): String {
     val routeQualifiedName = route.substringBefore('/')
     val titleRes = when (routeQualifiedName) {
         StartNavRoute::class.qualifiedName!! -> R.string.app_name
+        TransformerCollectionSelectionNavRoute::class.qualifiedName -> R.string.top_app_bar_title_transformer_group_selection_screen
         else -> null
     }
     return titleRes?.let { context.getString(titleRes) }?: ""
@@ -65,6 +71,20 @@ fun AppNavHost(
             appViewModel = appViewModel,
             navigateToTransformerCollectionScreen = {
                 navController.navigateToTransformerCollectionSelectionScreen()
+            }
+        )
+        transformerCollectionSelectionScreenDestination(
+            appViewModel = appViewModel,
+            popUpToStartScreen = {
+                navController.navigateToStartScreenWithPopUp(
+                    fromRoute = StartNavRoute
+                )
+            },
+            navigateToConversionScreen = {
+                Log.d("Navigation", "navigateToConversionScreen")
+            },
+            navigateToTransformerSelectionScreen = {
+                Log.d("Navigation", "navigateToTransformerSelectionScreen")
             }
         )
     }

@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">GlyphPort</string>
 
+    <!-- Top App Bar titles -->
+    <string name="top_app_bar_title_transformer_group_selection_screen">Device selection</string>
+
     <!-- General -->
     <string name="ok_confirmation">OK</string>
+    <string name="return_to_beginning">Return to beginning</string>
 
     <!-- Composition validation -->
     <string name="composition_validation_io_error">Could not read the file. Please try again.\nIf this error persists, please contact the developer.</string>
@@ -20,6 +24,11 @@
     <string name="file_made_for_phone_table_heading">Made for</string>
     <string name="file_number_of_columns_heading">Columns</string>
     <string name="invalid_composition_dialog_title">Invalid Composition</string>
+
+    <!-- Transformer Group Selection Screen -->
+    <string name="transformer_group_selection_heading">Port to</string>
+    <string name="no_transformer_groups_info_heading">No devices to port to</string>
+    <string name="no_transformer_groups_info_subtitle">Sorry, %s compositions are currently not supported yet.</string>
 
     <!-- Content description stuff -->
     <string name="content_description_top_app_bar_back_arrow_icon">Navigate up</string>

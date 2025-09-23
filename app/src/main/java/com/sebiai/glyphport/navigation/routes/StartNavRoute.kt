@@ -16,6 +16,15 @@ internal object StartNavRoute
 fun NavController.navigateToStartScreen() {
     navigate(StartNavRoute)
 }
+fun NavController.navigateToStartScreenWithPopUp(
+    fromRoute: Any
+) {
+    navigate(StartNavRoute) {
+        popUpTo(fromRoute) {
+            inclusive = true
+        }
+    }
+}
 
 fun NavGraphBuilder.startScreenDestination(
     appViewModel: AppViewModel,
