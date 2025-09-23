@@ -19,7 +19,7 @@ fun NavController.navigateToStartScreen() {
 
 fun NavGraphBuilder.startScreenDestination(
     appViewModel: AppViewModel,
-    onNextButtonClicked: () -> Unit
+    navigateToTransformerCollectionScreen: () -> Unit
 ) {
     composable<StartNavRoute> {
         val appState = appViewModel.appState.collectAsStateWithLifecycle().value
@@ -28,7 +28,7 @@ fun NavGraphBuilder.startScreenDestination(
             modifier = screenPaddingModifier.fillMaxSize(),
             composition = appState.selectedComposition,
             updateSelectedComposition = appViewModel::updateSelectedComposition,
-            onNextButtonClicked = onNextButtonClicked
+            onNextButtonClicked = navigateToTransformerCollectionScreen
         )
     }
 }

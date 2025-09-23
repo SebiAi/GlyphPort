@@ -63,7 +63,9 @@ fun AppNavHost(
     ) {
         startScreenDestination(
             appViewModel = appViewModel,
-            onNextButtonClicked = { /* TODO: Navigate to next screen */ }
+            navigateToTransformerCollectionScreen = {
+                navController.navigateToTransformerCollectionSelectionScreen()
+            }
         )
     }
 }
