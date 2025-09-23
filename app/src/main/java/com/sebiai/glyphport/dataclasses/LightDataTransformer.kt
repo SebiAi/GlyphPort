@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.annotation.StringRes
 import com.sebiai.glyphport.PhoneModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 abstract class LightDataTransformer(
-    private val ioDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     @get:StringRes
     protected abstract val nameStringRes: Int
