@@ -9,3 +9,11 @@ interface Composition {
     val lightData: CompositionLightData
     val phoneModel: PhoneModel
 }
+
+val compositionPreviewObject: Composition = CompositionPreviewImpl()
+private class CompositionPreviewImpl(
+    override val uri: Uri = Uri.EMPTY,
+    override val metadata: DecodedCompositionMetadata = DecodedCompositionMetadata(),
+    override val lightData: CompositionLightData = CompositionLightData(listOf(listOf(0u, 0u, 0u, 0u, 0u))),
+    override val phoneModel: PhoneModel = PhoneModel.PHONE1
+) : Composition

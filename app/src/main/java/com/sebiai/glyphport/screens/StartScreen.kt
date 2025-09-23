@@ -52,6 +52,7 @@ import com.sebiai.glyphport.dataclasses.CompositionValidator
 import com.sebiai.glyphport.dataclasses.DecodedCompositionMetadata
 import com.sebiai.glyphport.dataclasses.ValidationError
 import com.sebiai.glyphport.dataclasses.ValidationResult
+import com.sebiai.glyphport.dataclasses.compositionPreviewObject
 import com.sebiai.glyphport.getFileName
 import com.sebiai.glyphport.screenPaddingModifier
 import com.sebiai.glyphport.ui.theme.GlyphPortTheme
@@ -243,12 +244,6 @@ fun StartScreen(
     }
 }
 
-private class CompositionPreviewImpl(
-    override val uri: Uri,
-    override val metadata: DecodedCompositionMetadata,
-    override val lightData: CompositionLightData,
-    override val phoneModel: PhoneModel
-) : Composition
 @Preview
 @Composable
 fun StartScreenPreview() {
@@ -257,12 +252,7 @@ fun StartScreenPreview() {
             StartScreen(
                 modifier = screenPaddingModifier
                     .fillMaxSize(),
-                composition = CompositionPreviewImpl(
-                    uri = Uri.EMPTY,
-                    metadata = DecodedCompositionMetadata(),
-                    lightData = CompositionLightData(listOf(listOf(0u, 0u, 0u, 0u, 0u))),
-                    phoneModel = PhoneModel.PHONE1
-                ),
+                composition = compositionPreviewObject,
                 updateSelectedComposition = {},
                 onNextButtonClicked = {}
             )
