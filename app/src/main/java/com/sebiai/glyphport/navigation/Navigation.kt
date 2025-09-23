@@ -44,10 +44,22 @@ fun AppNavHost(
         modifier = modifier,
         navController = navController,
         startDestination = startDestination,
-        enterTransition = { slideInHorizontally(initialOffsetX = { layoutDirectionFactor * it / 2 }) + fadeIn(animationSpec = tween(400)) },
-        exitTransition = { slideOutHorizontally(targetOffsetX = { layoutDirectionFactor * -it / 2 }) + fadeOut(animationSpec = tween(400)) },
-        popEnterTransition = { slideInHorizontally(initialOffsetX = { layoutDirectionFactor * -it / 2 }) + fadeIn(animationSpec = tween(400)) },
-        popExitTransition = { slideOutHorizontally(targetOffsetX = { layoutDirectionFactor * it / 2 }) + fadeOut(animationSpec = tween(400)) },
+        enterTransition = {
+            slideInHorizontally(initialOffsetX = { layoutDirectionFactor * it / 2 }) +
+                    fadeIn(animationSpec = tween(400))
+        },
+        exitTransition = {
+            slideOutHorizontally(targetOffsetX = { layoutDirectionFactor * -it / 2 }) +
+                    fadeOut(animationSpec = tween(400))
+        },
+        popEnterTransition = {
+            slideInHorizontally(initialOffsetX = { layoutDirectionFactor * -it / 2 }) +
+                    fadeIn(animationSpec = tween(400))
+        },
+        popExitTransition = {
+            slideOutHorizontally(targetOffsetX = { layoutDirectionFactor * it / 2 }) +
+                    fadeOut(animationSpec = tween(400))
+        },
     ) {
         startScreenDestination(
             appViewModel = appViewModel,
