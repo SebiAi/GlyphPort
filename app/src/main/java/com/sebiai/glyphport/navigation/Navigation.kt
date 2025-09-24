@@ -17,8 +17,10 @@ import com.sebiai.glyphport.AppViewModel
 import com.sebiai.glyphport.R
 import com.sebiai.glyphport.navigation.routes.StartNavRoute
 import com.sebiai.glyphport.navigation.routes.TransformerCollectionSelectionNavRoute
+import com.sebiai.glyphport.navigation.routes.navigateToPortingScreen
 import com.sebiai.glyphport.navigation.routes.navigateToStartScreenWithPopUp
 import com.sebiai.glyphport.navigation.routes.navigateToTransformerCollectionSelectionScreen
+import com.sebiai.glyphport.navigation.routes.portingScreenDestination
 import com.sebiai.glyphport.navigation.routes.startScreenDestination
 import com.sebiai.glyphport.navigation.routes.transformerCollectionSelectionScreenDestination
 
@@ -69,9 +71,7 @@ fun AppNavHost(
     ) {
         startScreenDestination(
             appViewModel = appViewModel,
-            navigateToTransformerCollectionScreen = {
-                navController.navigateToTransformerCollectionSelectionScreen()
-            }
+            navigateToTransformerCollectionScreen = navController::navigateToTransformerCollectionSelectionScreen
         )
         transformerCollectionSelectionScreenDestination(
             appViewModel = appViewModel,
@@ -80,12 +80,19 @@ fun AppNavHost(
                     fromRoute = StartNavRoute
                 )
             },
-            navigateToConversionScreen = {
-                Log.d("Navigation", "navigateToConversionScreen")
-            },
+            navigateToPortingScreen = navController::navigateToPortingScreen,
             navigateToTransformerSelectionScreen = {
+                // TODO: navigateToTransformerSelectionScreen
                 Log.d("Navigation", "navigateToTransformerSelectionScreen")
             }
+        )
+        portingScreenDestination(
+            appViewModel = appViewModel,
+            popUpToStartScreen = {
+                navController.navigateToStartScreenWithPopUp(
+                    fromRoute = StartNavRoute
+                )
+            },
         )
     }
 }

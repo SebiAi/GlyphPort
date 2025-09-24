@@ -23,8 +23,8 @@ fun NavController.navigateToTransformerCollectionSelectionScreen() {
 fun NavGraphBuilder.transformerCollectionSelectionScreenDestination(
     appViewModel: AppViewModel,
     popUpToStartScreen: () -> Unit,
-    navigateToConversionScreen: (LightDataTransformer) -> Unit,
-    navigateToTransformerSelectionScreen: (LightDataTransformerCollection) -> Unit
+    navigateToPortingScreen: () -> Unit,
+    navigateToTransformerSelectionScreen: () -> Unit
 ) {
     composable<TransformerCollectionSelectionNavRoute> {
         val appState = appViewModel.appState.collectAsStateWithLifecycle().value
@@ -40,10 +40,14 @@ fun NavGraphBuilder.transformerCollectionSelectionScreenDestination(
                     appState.selectedComposition.phoneModel,
                     targetPhoneModel
                 )!!
-                if (transformerCollection.transformers.size <= 1)
-                    navigateToConversionScreen(transformerCollection.transformers.first())
-                else
-                    navigateToTransformerSelectionScreen(transformerCollection)
+                if (transformerCollection.transformers.size <= 1) {
+                    appViewModel.updateSelectedTransformer(transformerCollection.transformers.first())
+                    navigateToPortingScreen()
+                }
+                else {
+                    appViewModel.updateSelectedTransformerCollection(transformerCollection)
+                    navigateToTransformerSelectionScreen()
+                }
             }
         )
     }
