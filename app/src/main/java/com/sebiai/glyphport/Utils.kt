@@ -3,6 +3,7 @@ package com.sebiai.glyphport
 import android.content.Context
 import android.net.Uri
 import android.os.Build
+import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
 import androidx.compose.foundation.layout.padding
@@ -69,6 +70,17 @@ fun getFileName(context: Context, uri: Uri): String {
         val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
         cursor.moveToFirst()
         cursor.getString(nameIndex)
+    }.orEmpty()
+}
+
+fun getFilePathForLocalMediaStore(context: Context, uri: Uri): String {
+    require(!uri.isRelative)
+    require(uri.scheme!!.lowercase() == "content")
+
+    return context.contentResolver.query(uri, arrayOf(MediaStore.Audio.Media.DATA), null, null, null)?.use { cursor ->
+        val dataIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
+        cursor.moveToFirst()
+        cursor.getString(dataIndex)
     }.orEmpty()
 }
 
