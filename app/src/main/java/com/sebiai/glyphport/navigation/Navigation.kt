@@ -88,11 +88,9 @@ fun AppNavHost(
         )
         portingScreenDestination(
             appViewModel = appViewModel,
-            popUpToStartScreen = {
-                navController.navigateToStartScreenWithPopUp(
-                    fromRoute = StartNavRoute
-                )
-            },
+            popUpToPortingSuccessScreen = {
+                
+            }
         )
     }
 }

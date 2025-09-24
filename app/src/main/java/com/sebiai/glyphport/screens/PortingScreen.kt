@@ -1,14 +1,24 @@
 package com.sebiai.glyphport.screens
 
 import android.content.ContentValues
+import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -28,6 +38,7 @@ import androidx.lifecycle.lifecycleScope
 import com.sebiai.glyphport.PhoneModel
 import com.sebiai.glyphport.R
 import com.sebiai.glyphport.composables.CompositionInfoTable
+import com.sebiai.glyphport.composables.RoundedLargeButton
 import com.sebiai.glyphport.dataclasses.Composition
 import com.sebiai.glyphport.dataclasses.CompositionMetadataWriter
 import com.sebiai.glyphport.dataclasses.DecodedCompositionMetadata
@@ -46,7 +57,7 @@ fun PortingScreen(
     modifier: Modifier = Modifier,
     composition: Composition,
     transformer: LightDataTransformer,
-    onGoBackToStartButtonClicked: () -> Unit
+    onPortingSuccess: (Uri) -> Unit
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -61,8 +72,8 @@ fun PortingScreen(
             composition = composition
         )
         Spacer(modifier = Modifier.height(18.dp))
-        Button(
-            enabled = !portingInProgress,
+        PortButton(
+            portingInProgress = portingInProgress,
             onClick = {
                 // TODO: [NOW] Better error and exception handling
                 portingInProgress = true
@@ -123,15 +134,41 @@ fun PortingScreen(
 
                         portingInProgress = false
                     }
+                    onPortingSuccess(destinationUri)
                 }
             }
+        )
+    }
+}
+
+@Composable
+private fun PortButton(
+    onClick: () -> Unit,
+    portingInProgress: Boolean
+) {
+    RoundedLargeButton(
+        enabled = !portingInProgress,
+        onClick = onClick
+    ) {
+        AnimatedVisibility(
+            visible = portingInProgress,
+            enter = fadeIn(animationSpec = tween(durationMillis = 500)) + expandHorizontally(clip = false, animationSpec = tween(durationMillis = 500)),
+            exit = shrinkHorizontally(clip = false, animationSpec = tween(durationMillis = 500)) + fadeOut(animationSpec = tween(durationMillis = 500))
         ) {
-            Text(
-                style = MaterialTheme.typography.headlineMedium,
-                text = "Port Composition",
-                fontWeight = FontWeight.SemiBold
-            )
+            Row {
+                CircularProgressIndicator(
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(
+                    modifier = Modifier.width(8.dp)
+                )
+            }
         }
+        Text(
+            style = MaterialTheme.typography.headlineMedium,
+            text = "Port Composition",
+            fontWeight = FontWeight.SemiBold
+        )
     }
 }
 
@@ -145,7 +182,20 @@ private fun PortingScreenPreview() {
                     .fillMaxSize(),
                 composition = compositionPreviewObject,
                 transformer = DefaultPhone1ToPhone2LightDataTransformer(),
-                onGoBackToStartButtonClicked = {}
+                onPortingSuccess = {}
+            )
+        }
+    }
+}
+
+@Preview
+@Composable
+private fun PortButtonPreview() {
+    GlyphPortTheme {
+        Surface {
+            PortButton(
+                onClick = {},
+                portingInProgress = true
             )
         }
     }

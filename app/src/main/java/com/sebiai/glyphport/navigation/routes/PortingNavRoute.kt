@@ -1,5 +1,6 @@
 package com.sebiai.glyphport.navigation.routes
 
+import android.net.Uri
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
@@ -19,7 +20,7 @@ fun NavController.navigateToPortingScreen() {
 
 fun NavGraphBuilder.portingScreenDestination(
     appViewModel: AppViewModel,
-    popUpToStartScreen: () -> Unit
+    popUpToPortingSuccessScreen: (Uri) -> Unit
 ) {
     composable<PortingNavRoute> {
         val appState = appViewModel.appState.collectAsStateWithLifecycle().value
@@ -28,12 +29,7 @@ fun NavGraphBuilder.portingScreenDestination(
             modifier = screenPaddingModifier.fillMaxSize(),
             composition = appState.selectedComposition!!,
             transformer = appState.selectedTransformer!!,
-            onGoBackToStartButtonClicked = {
-                // Reset selections
-                appViewModel.clearSelections()
-                // Back to start
-                popUpToStartScreen()
-            },
+            onPortingSuccess = popUpToPortingSuccessScreen
         )
     }
 }
