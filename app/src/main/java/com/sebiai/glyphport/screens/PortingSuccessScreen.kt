@@ -60,7 +60,7 @@ fun PortingSuccessScreen(
         CenteredTitleWithSubtitle(
             modifier = Modifier.fillMaxWidth(),
             title = "Ported successfully!",
-            subtitle = "The ported composition was saved in\n$portedCompositionFilePath"
+            subtitle = "The ported composition was saved in\n\"$portedCompositionFilePath\""
         )
         Spacer(modifier = Modifier.height(12.dp))
         Row(
