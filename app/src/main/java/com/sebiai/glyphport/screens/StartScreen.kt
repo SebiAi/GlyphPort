@@ -5,18 +5,14 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AudioFile
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -41,6 +37,7 @@ import androidx.lifecycle.lifecycleScope
 import com.sebiai.glyphport.R
 import com.sebiai.glyphport.composables.CompositionInfoTable
 import com.sebiai.glyphport.composables.EndAlignedSingleTextButtonRow
+import com.sebiai.glyphport.composables.RoundedLargeButton
 import com.sebiai.glyphport.dataclasses.Composition
 import com.sebiai.glyphport.dataclasses.CompositionValidator
 import com.sebiai.glyphport.dataclasses.ValidationError
@@ -118,31 +115,25 @@ fun StartScreen(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Button(
+            RoundedLargeButton(
                 onClick = {
                     pickCompositionLauncher.launch("audio/ogg")
-                },
-                shape = RoundedCornerShape(18.dp)
-            ) {
-                Row(
-                    modifier = Modifier.padding(vertical = 12.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(
-                        modifier = Modifier.size(32.dp),
-                        imageVector = Icons.Outlined.AudioFile,
-                        contentDescription = null
-                    )
-                    Spacer(
-                        modifier = Modifier.width(8.dp)
-                    )
-                    Text(
-                        style = MaterialTheme.typography.headlineMedium,
-                        text = stringResource(R.string.button_select_composition),
-                        fontWeight = FontWeight.SemiBold,
-                        textAlign = TextAlign.Center
-                    )
                 }
+            ) {
+                Icon(
+                    modifier = Modifier.size(32.dp),
+                    imageVector = Icons.Outlined.AudioFile,
+                    contentDescription = null
+                )
+                Spacer(
+                    modifier = Modifier.width(8.dp)
+                )
+                Text(
+                    style = MaterialTheme.typography.headlineMedium,
+                    text = stringResource(R.string.button_select_composition),
+                    fontWeight = FontWeight.SemiBold,
+                    textAlign = TextAlign.Center
+                )
             }
             Spacer(modifier = Modifier.height(2.dp))
             Text(
