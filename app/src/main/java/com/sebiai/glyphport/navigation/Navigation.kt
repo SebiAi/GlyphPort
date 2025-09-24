@@ -93,20 +93,21 @@ fun AppNavHost(
                 Log.d("Navigation", "navigateToTransformerSelectionScreen")
             }
         )
-        // TODO: This navigation needs work
         portingScreenDestination(
             appViewModel = appViewModel,
             popUpToPortingSuccessScreen = {
                 navController.navigateToPortingSuccessScreenWithPopUp(
                     portedCompositionUri = it,
-                    fromRoute = StartNavRoute
+                    fromRoute = PortingNavRoute
                 )
             }
         )
         portingSuccessScreenDestination(
             appViewModel = appViewModel,
             popUpToStartScreen = {
-                navController.navigateToStartScreen()
+                navController.navigateToStartScreenWithPopUp(
+                    fromRoute = StartNavRoute
+                )
             },
         )
     }
