@@ -1,6 +1,7 @@
 package com.sebiai.glyphport.dataclasses
 
 import android.net.Uri
+import androidx.core.net.toUri
 import com.sebiai.glyphport.PhoneModel
 
 interface Composition {
@@ -12,7 +13,7 @@ interface Composition {
 
 val compositionPreviewObject: Composition = CompositionPreviewImpl()
 private class CompositionPreviewImpl(
-    override val uri: Uri = Uri.EMPTY,
+    override val uri: Uri = "content://".toUri(),
     override val metadata: DecodedCompositionMetadata = DecodedCompositionMetadata(),
     override val lightData: CompositionLightData = CompositionLightData(listOf(listOf(0u, 0u, 0u, 0u, 0u))),
     override val phoneModel: PhoneModel = PhoneModel.PHONE1
