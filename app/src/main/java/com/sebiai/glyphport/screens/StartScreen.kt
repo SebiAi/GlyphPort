@@ -1,16 +1,13 @@
 package com.sebiai.glyphport.screens
 
-import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,8 +17,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AudioFile
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
@@ -43,18 +38,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import com.sebiai.glyphport.PhoneModel
 import com.sebiai.glyphport.R
 import com.sebiai.glyphport.composables.CompositionInfoTable
 import com.sebiai.glyphport.composables.EndAlignedSingleTextButtonRow
 import com.sebiai.glyphport.dataclasses.Composition
-import com.sebiai.glyphport.dataclasses.CompositionLightData
 import com.sebiai.glyphport.dataclasses.CompositionValidator
-import com.sebiai.glyphport.dataclasses.DecodedCompositionMetadata
 import com.sebiai.glyphport.dataclasses.ValidationError
 import com.sebiai.glyphport.dataclasses.ValidationResult
 import com.sebiai.glyphport.dataclasses.compositionPreviewObject
-import com.sebiai.glyphport.getFileName
 import com.sebiai.glyphport.screenPaddingModifier
 import com.sebiai.glyphport.ui.theme.GlyphPortTheme
 import kotlinx.coroutines.launch

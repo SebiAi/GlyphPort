@@ -6,8 +6,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.sebiai.glyphport.AppViewModel
-import com.sebiai.glyphport.dataclasses.LightDataTransformer
-import com.sebiai.glyphport.dataclasses.LightDataTransformerCollection
 import com.sebiai.glyphport.dataclasses.LightDataTransformerRegistry
 import com.sebiai.glyphport.screenPaddingModifier
 import com.sebiai.glyphport.screens.TransformerCollectionSelectionScreen

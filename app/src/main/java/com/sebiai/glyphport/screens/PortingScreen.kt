@@ -1,8 +1,6 @@
 package com.sebiai.glyphport.screens
 
 import android.content.ContentValues
-import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import androidx.compose.foundation.layout.Arrangement
@@ -10,7 +8,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -32,7 +29,6 @@ import com.sebiai.glyphport.PhoneModel
 import com.sebiai.glyphport.R
 import com.sebiai.glyphport.composables.CompositionInfoTable
 import com.sebiai.glyphport.dataclasses.Composition
-import com.sebiai.glyphport.dataclasses.CompositionMetadata
 import com.sebiai.glyphport.dataclasses.CompositionMetadataWriter
 import com.sebiai.glyphport.dataclasses.DecodedCompositionMetadata
 import com.sebiai.glyphport.dataclasses.LightDataTransformer
