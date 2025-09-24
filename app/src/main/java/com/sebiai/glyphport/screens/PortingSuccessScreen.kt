@@ -68,7 +68,7 @@ fun PortingSuccessScreen(
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
             OutlinedButton(
-                onClick = onStartOverButtonClicked
+                onClick = {}
             ) {
                 Icon(
                     modifier = Modifier.size(20.dp),
