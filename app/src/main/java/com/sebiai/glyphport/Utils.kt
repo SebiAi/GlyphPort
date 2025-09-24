@@ -46,7 +46,7 @@ fun <T: AbstractSession> safeHandleFFmpegKitSession(
     session: T,
     onSuccess: (T) -> Unit,
     onCancel: (T) -> Unit = {},
-    onFailure: (T) -> Unit = { throw FFmpegKitSessionFailureExeption(it.failStackTrace) }
+    onFailure: (T) -> Unit = { throw FFmpegKitSessionFailureExeption(it.failStackTrace ?: "Stack Trace was null") }
 ) {
     val tag = "FFmpegKitSessionHandler"
 
