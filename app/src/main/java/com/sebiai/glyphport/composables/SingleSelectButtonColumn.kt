@@ -3,9 +3,15 @@ package com.sebiai.glyphport.composables
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.sebiai.glyphport.ui.theme.GlyphPortTheme
@@ -31,12 +37,51 @@ fun SingleSelectButtonColumn(
     ) {
         options.forEachIndexed { index, buttonConfig ->
             SingleSelectButton(
-                modifier = Modifier.fillMaxWidth(),
                 text = buttonConfig.text,
                 description = buttonConfig.description,
                 selected = index == selectedIndex,
                 onClick = { onClick(index) }
             )
+        }
+    }
+}
+
+@Composable
+private fun SingleSelectButton(
+    text: String,
+    description: String?,
+    selected: Boolean,
+    onClick: () -> Unit
+) {
+    val colors = if (selected) ButtonDefaults.buttonColors() else
+        ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            contentColor = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.75f)
+        )
+
+    RoundedLargeButton(
+        modifier = Modifier.fillMaxWidth(),
+        onClick = onClick,
+        colors = colors
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                style = MaterialTheme.typography.titleLarge,
+                text = text,
+                fontWeight = FontWeight.Normal,
+                textAlign = TextAlign.Center
+            )
+            description?.let {
+                Text(
+                    style = MaterialTheme.typography.titleSmall,
+                    color = LocalContentColor.current.copy(alpha = 0.65f),
+                    text = description,
+                    fontWeight = FontWeight.Normal,
+                    textAlign = TextAlign.Center
+                )
+            }
         }
     }
 }
