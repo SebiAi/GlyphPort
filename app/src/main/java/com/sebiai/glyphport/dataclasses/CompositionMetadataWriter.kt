@@ -6,7 +6,9 @@ import com.arthenica.ffmpegkit.FFmpegKit
 import com.arthenica.ffmpegkit.FFmpegKitConfig
 import com.sebiai.glyphport.safeHandleFFmpegKitSession
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import java.io.File
 
@@ -15,7 +17,7 @@ class CompositionMetadataWriter(
     val outputFile: Uri,
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
-    suspend fun write(context: Context, metadata: EncodedCompositionMetadata) = withContext(ioDispatcher) {
+    suspend fun write(context: Context, metadata: EncodedCompositionMetadata): Boolean = withContext(ioDispatcher) {
         // Convert the metadata to ffmetadata (https://ffmpeg.org/ffmpeg-formats.html#ffmetadata)
         // This data can then be piped to ffmpeg circumventing errors when passing
         // long metadata via arguments due to command length limitations.
@@ -35,12 +37,13 @@ class CompositionMetadataWriter(
             "${escapeFFmetadata(key)}=${escapeFFmetadata(value)}"
         }
 
+        val deferredFFmpegSuccess: Deferred<Boolean>
         val pipe = FFmpegKitConfig.registerNewFFmpegPipe(context)
         try {
             // Construct command with pipe
             val audioFileParam = FFmpegKitConfig.getSafParameterForRead(context, audioFile)
             val outputFileParam = FFmpegKitConfig.getSafParameterForWrite(context, outputFile)
-            val ffmpegCommand = metadata.joinToString( // TODO: Test if files with spaces work!
+            val ffmpegCommand = metadata.joinToString(
                 separator = " ",
                 prefix = "-i '$audioFileParam' -i $pipe ", // Inputs
                 postfix = " -map_metadata 1 -c:a copy -fflags +bitexact -flags:v +bitexact " +
@@ -49,12 +52,17 @@ class CompositionMetadataWriter(
                 "-metadata:s:a:0 '$key='" // Clear all metadata we want to overwrite
             }
 
-            // Execute async
-            FFmpegKit.executeAsync(ffmpegCommand) {
+            // Execute async - we need to write to the pipe while ffmpeg is running
+            deferredFFmpegSuccess = async {
+                val session = FFmpegKit.execute(ffmpegCommand)
+                var success = false
                 safeHandleFFmpegKitSession(
-                    session = it,
-                    onSuccess = {}
+                    session,
+                    onSuccess = { success = true },
+                    onCancel = {  },
+                    onFailure = { }
                 )
+                return@async success
             }
 
             // Write ffmetadata to pipe
@@ -62,6 +70,8 @@ class CompositionMetadataWriter(
         } finally {
             FFmpegKitConfig.closeFFmpegPipe(pipe)
         }
+
+        return@withContext deferredFFmpegSuccess.await()
     }
 
     private fun escapeFFmetadata(content: String): String {
