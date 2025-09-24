@@ -71,3 +71,9 @@ fun getFileName(context: Context, uri: Uri): String {
         cursor.getString(nameIndex)
     }.orEmpty()
 }
+
+fun getAppNameWithMajorVersion(context: Context): String {
+    val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+    val majorVersion = packageInfo.versionName!!.substringBefore('.').removePrefix("v")
+    return context.getString(R.string.app_name) + " v$majorVersion"
+}
