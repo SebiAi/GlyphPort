@@ -115,7 +115,7 @@ fun TransformerCollectionSelectionScreen(
 
 @Preview
 @Composable
-fun TransformerCollectionSelectionPreview() {
+private fun TransformerCollectionSelectionPreview() {
     GlyphPortTheme {
         Surface {
             TransformerCollectionSelectionScreen(
@@ -131,7 +131,7 @@ fun TransformerCollectionSelectionPreview() {
 
 @Preview
 @Composable
-fun TransformerCollectionSelectionWithoutDevicesPreview() {
+private fun TransformerCollectionSelectionWithoutDevicesPreview() {
     GlyphPortTheme {
         Surface {
             TransformerCollectionSelectionScreen(

@@ -43,7 +43,7 @@ fun SingleSelectButtonColumn(
 
 @Preview
 @Composable
-fun SingleSelectButtonColumnPreview() {
+private fun SingleSelectButtonColumnPreview() {
     GlyphPortTheme {
         SingleSelectButtonColumn(
             options = listOf(
@@ -58,7 +58,7 @@ fun SingleSelectButtonColumnPreview() {
 }
 @Preview
 @Composable
-fun SingleSelectButtonColumnWithSelectionPreview() {
+private fun SingleSelectButtonColumnWithSelectionPreview() {
     GlyphPortTheme {
         SingleSelectButtonColumn(
             options = listOf(
@@ -73,7 +73,7 @@ fun SingleSelectButtonColumnWithSelectionPreview() {
 }
 @Preview
 @Composable
-fun SingleSelectButtonColumnWithDescriptionPreview() {
+private fun SingleSelectButtonColumnWithDescriptionPreview() {
     GlyphPortTheme {
         SingleSelectButtonColumn(
             options = listOf(
@@ -88,7 +88,7 @@ fun SingleSelectButtonColumnWithDescriptionPreview() {
 }
 @Preview
 @Composable
-fun SingleSelectButtonColumnWithDescriptionAndSelectionPreview() {
+private fun SingleSelectButtonColumnWithDescriptionAndSelectionPreview() {
     GlyphPortTheme {
         SingleSelectButtonColumn(
             options = listOf(

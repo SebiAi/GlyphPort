@@ -69,7 +69,7 @@ fun SingleSelectButton(
 
 @Preview
 @Composable
-fun SingleSelectButtonPreview() {
+private fun SingleSelectButtonPreview() {
     GlyphPortTheme {
         SingleSelectButton(
             text = "Hello World!",
@@ -80,7 +80,7 @@ fun SingleSelectButtonPreview() {
 }
 @Preview
 @Composable
-fun SingleSelectButtonSelectedPreview() {
+private fun SingleSelectButtonSelectedPreview() {
     GlyphPortTheme {
         SingleSelectButton(
             text = "Hello World!",
@@ -91,7 +91,7 @@ fun SingleSelectButtonSelectedPreview() {
 }
 @Preview
 @Composable
-fun SingleSelectButtonWithDescriptionPreview() {
+private fun SingleSelectButtonWithDescriptionPreview() {
     GlyphPortTheme {
         SingleSelectButton(
             text = "Hello World!",
@@ -103,7 +103,7 @@ fun SingleSelectButtonWithDescriptionPreview() {
 }
 @Preview
 @Composable
-fun SingleSelectButtonWithDescriptionAndSelectedPreview() {
+private fun SingleSelectButtonWithDescriptionAndSelectedPreview() {
     GlyphPortTheme {
         SingleSelectButton(
             text = "Hello World!",

@@ -246,7 +246,7 @@ fun StartScreen(
 
 @Preview
 @Composable
-fun StartScreenPreview() {
+private fun StartScreenPreview() {
     GlyphPortTheme {
         Surface {
             StartScreen(
