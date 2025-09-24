@@ -65,9 +65,11 @@ fun <T: AbstractSession> safeHandleFFmpegKitSession(
 }
 
 fun getFileName(context: Context, uri: Uri): String {
+    require(!uri.isRelative)
+    require(uri.scheme!!.lowercase() == "content")
     // https://developer.android.com/training/secure-file-sharing/retrieve-info#RetrieveFileInfo
     return context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
-        val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+        val nameIndex = cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME)
         cursor.moveToFirst()
         cursor.getString(nameIndex)
     }.orEmpty()
