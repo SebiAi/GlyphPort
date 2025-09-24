@@ -2,6 +2,7 @@ package com.sebiai.glyphport.composables
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.LocalContentColor
@@ -62,7 +63,8 @@ private fun SingleSelectButton(
     RoundedLargeButton(
         modifier = Modifier.fillMaxWidth(),
         onClick = onClick,
-        colors = colors
+        colors = colors,
+        contentPadding = PaddingValues(horizontal = 24.dp, vertical = 12.dp)
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
