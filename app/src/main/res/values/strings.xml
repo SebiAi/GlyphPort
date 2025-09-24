@@ -4,10 +4,12 @@
     <!-- Top App Bar titles -->
     <string name="top_app_bar_title_transformer_group_selection_screen">Device selection</string>
     <string name="top_app_bar_title_porting_screen">Confirm Porting</string>
+    <string name="top_app_bar_title_porting_success_screen">Successfully Ported</string>
 
     <!-- General -->
     <string name="ok_confirmation">OK</string>
     <string name="return_to_beginning">Return to beginning</string>
+    <string name="start_over">Start over</string>
 
     <!-- Composition validation -->
     <string name="composition_validation_io_error">Could not read the file. Please try again.\nIf this error persists, please contact the developer.</string>
