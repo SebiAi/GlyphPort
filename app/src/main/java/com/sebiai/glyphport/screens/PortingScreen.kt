@@ -62,7 +62,6 @@ fun PortingScreen(
         verticalArrangement = Arrangement.Center
     ) {
         CompositionInfoTable(
-            modifier = Modifier.padding(horizontal = 8.dp),
             composition = composition
         )
         Spacer(modifier = Modifier.height(18.dp))
@@ -93,7 +92,6 @@ fun PortingScreen(
                     val newFileName = "${oldFile.nameWithoutExtension}_${context.getString(R.string.ported_to_phone_model, transformer.outputs.phoneName)}-${transformer.getName(context)}.${oldFile.extension}"
                     val newCompositionDetails = ContentValues().apply {
                         // If the file already exists, it will automatically get a suffix - yay
-
                         put(MediaStore.Audio.Media.DISPLAY_NAME, newFileName)
                         // put(MediaStore.Audio.Media.CONTENT_TYPE, "audio/ogg") // Not sure about this one
                         put(MediaStore.Audio.Media.IS_RINGTONE, 1)

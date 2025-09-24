@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.arthenica.ffmpegkit.AbstractSession
 import com.arthenica.ffmpegkit.ReturnCode
 
-val screenPaddingModifier = Modifier.padding(12.dp)
+val screenPaddingModifier = Modifier.padding(18.dp)
 
 enum class PhoneModel(val phoneName: String, val build: String, val supportedZones: Array<UInt>) {
     PHONE1("Phone (1)", "Spacewar", arrayOf(5u, 15u)),

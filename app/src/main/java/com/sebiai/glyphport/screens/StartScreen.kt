@@ -131,7 +131,7 @@ fun StartScreen(
                 onClick = {
                     pickCompositionLauncher.launch("audio/ogg")
                 },
-                shape = RoundedCornerShape(30)
+                shape = RoundedCornerShape(18.dp)
             ) {
                 Row(
                     modifier = Modifier.padding(vertical = 12.dp),
@@ -164,12 +164,10 @@ fun StartScreen(
             Spacer(modifier = Modifier.height(12.dp))
 
             CompositionInfoTable(
-                modifier = Modifier.padding(horizontal = 8.dp),
                 composition = composition
             )
         }
         EndAlignedSingleTextButtonRow(
-            modifier = Modifier.padding(end = 6.dp, bottom = 6.dp),
             text = stringResource(R.string.button_next),
             onClick = onNextButtonClicked,
             enabled = composition != null
