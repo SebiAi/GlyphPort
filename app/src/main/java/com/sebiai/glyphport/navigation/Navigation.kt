@@ -15,6 +15,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.sebiai.glyphport.AppViewModel
 import com.sebiai.glyphport.R
+import com.sebiai.glyphport.navigation.routes.PortingNavRoute
 import com.sebiai.glyphport.navigation.routes.StartNavRoute
 import com.sebiai.glyphport.navigation.routes.TransformerCollectionSelectionNavRoute
 import com.sebiai.glyphport.navigation.routes.navigateToPortingScreen
@@ -30,7 +31,8 @@ fun getTitleForRoute(context: Context, route: String): String {
     val routeQualifiedName = route.substringBefore('/')
     val titleRes = when (routeQualifiedName) {
         StartNavRoute::class.qualifiedName!! -> R.string.app_name
-        TransformerCollectionSelectionNavRoute::class.qualifiedName -> R.string.top_app_bar_title_transformer_group_selection_screen
+        TransformerCollectionSelectionNavRoute::class.qualifiedName!! -> R.string.top_app_bar_title_transformer_group_selection_screen
+        PortingNavRoute::class.qualifiedName!! -> R.string.top_app_bar_title_porting_screen
         else -> null
     }
     return titleRes?.let { context.getString(titleRes) }?: ""
