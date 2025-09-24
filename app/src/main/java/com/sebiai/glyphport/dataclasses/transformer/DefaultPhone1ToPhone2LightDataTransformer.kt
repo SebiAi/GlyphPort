@@ -13,6 +13,11 @@ class DefaultPhone1ToPhone2LightDataTransformer(ioDispatcher: CoroutineDispatche
     override val descriptionStringRes: Int
         get() = R.string.default_light_data_transfer_description
 
+    override val handles: PhoneModel
+        get() = PhoneModel.PHONE1
+    override val outputs: PhoneModel
+        get() = PhoneModel.PHONE2
+
     override fun transformImpl(lightData: CompositionLightData): CompositionLightData {
         // Sanity check
         assert(5u in PhoneModel.PHONE1.supportedZones && 15u in PhoneModel.PHONE1.supportedZones && PhoneModel.PHONE1.supportedZones .size == 2)
@@ -54,12 +59,5 @@ class DefaultPhone1ToPhone2LightDataTransformer(ioDispatcher: CoroutineDispatche
                 }
             }
         )
-    }
-
-    override fun canHandle(
-        handles: PhoneModel,
-        output: PhoneModel
-    ): Boolean {
-        return handles == PhoneModel.PHONE1 && output == PhoneModel.PHONE2
     }
 }

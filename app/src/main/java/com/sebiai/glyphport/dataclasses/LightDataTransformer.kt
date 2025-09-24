@@ -14,6 +14,8 @@ abstract class LightDataTransformer(
     protected abstract val nameStringRes: Int
     @get:StringRes
     protected abstract val descriptionStringRes: Int
+    abstract val handles: PhoneModel
+    abstract val outputs: PhoneModel
 
     fun getName(context: Context): String = context.getString(nameStringRes)
     fun getDescription(context: Context): String = context.getString(descriptionStringRes)
@@ -22,5 +24,7 @@ abstract class LightDataTransformer(
         return@withContext transformImpl(lightData)
     }
     protected abstract fun transformImpl(lightData: CompositionLightData): CompositionLightData
-    abstract fun canHandle(handles: PhoneModel, output: PhoneModel): Boolean
+    fun canHandle(handles: PhoneModel, output: PhoneModel): Boolean {
+        return handles == this.handles && output == this.outputs
+    }
 }
