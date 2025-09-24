@@ -14,6 +14,23 @@ class DecodedCompositionMetadata(
 ) : CompositionMetadata(title, album, composer, author, custom1, custom2) {
     constructor() : this("", "",
         "", "", "", "")
+    constructor(
+        title: String,
+        album: String,
+        composer: String,
+        authorLightData: CompositionLightData,
+        custom1: String,
+        custom2: String
+    ) : this(
+        title = title,
+        album = album,
+        composer = composer,
+        author = authorLightData.joinToString(separator = "\r\n", postfix = "\r\n") {
+            it.joinToString(separator = ",", postfix = ",")
+        },
+        custom1 = custom1,
+        custom2 = custom2
+    )
 
     /**
      * Encodes the composition metadata
