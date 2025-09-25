@@ -2,7 +2,6 @@ package com.sebiai.glyphport.screens
 
 import android.content.ContentValues
 import android.net.Uri
-import android.os.Environment
 import android.provider.MediaStore
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween
@@ -39,6 +38,7 @@ import com.sebiai.glyphport.PhoneModel
 import com.sebiai.glyphport.R
 import com.sebiai.glyphport.composables.CompositionInfoTable
 import com.sebiai.glyphport.composables.RoundedLargeButton
+import com.sebiai.glyphport.compositionsSaveDirectory
 import com.sebiai.glyphport.dataclasses.Composition
 import com.sebiai.glyphport.dataclasses.CompositionMetadataWriter
 import com.sebiai.glyphport.dataclasses.DecodedCompositionMetadata
@@ -106,7 +106,7 @@ fun PortingScreen(
                         put(MediaStore.Audio.Media.COMPOSER, newMetadata.composer)
                         put(MediaStore.Audio.Media.IS_PENDING, 1)
                         put(MediaStore.Audio.Media.MIME_TYPE, "audio/ogg")
-                        put(MediaStore.Audio.Media.RELATIVE_PATH, "${Environment.DIRECTORY_RINGTONES}${File.separator}Compositions")
+                        put(MediaStore.Audio.Media.RELATIVE_PATH, compositionsSaveDirectory)
                         put(MediaStore.Audio.Media.TITLE, newMetadata.title)
                     }
                     val destinationUri = context.contentResolver.insert(

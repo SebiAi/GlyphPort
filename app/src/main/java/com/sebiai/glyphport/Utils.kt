@@ -3,6 +3,7 @@ package com.sebiai.glyphport
 import android.content.Context
 import android.net.Uri
 import android.os.Build
+import android.os.Environment
 import android.provider.MediaStore
 import android.provider.OpenableColumns
 import android.util.Log
@@ -11,8 +12,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.arthenica.ffmpegkit.AbstractSession
 import com.arthenica.ffmpegkit.ReturnCode
+import java.io.File
 
 val screenPaddingModifier = Modifier.padding(18.dp)
+val compositionsSaveDirectory = "${Environment.DIRECTORY_RINGTONES}${File.separator}Compositions"
 
 enum class PhoneModel(val phoneName: String, val build: String, val supportedZones: Array<UInt>) {
     PHONE1("Phone (1)", "Spacewar", arrayOf(5u, 15u)),
