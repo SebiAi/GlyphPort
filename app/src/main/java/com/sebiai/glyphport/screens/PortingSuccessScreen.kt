@@ -1,5 +1,7 @@
 package com.sebiai.glyphport.screens
 
+import android.content.ClipData
+import android.content.Intent
 import android.net.Uri
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -30,6 +32,7 @@ import com.sebiai.glyphport.R
 import com.sebiai.glyphport.composables.CenteredTitleWithSubtitle
 import com.sebiai.glyphport.composables.RoundedContentContainer
 import com.sebiai.glyphport.compositionsSaveDirectory
+import com.sebiai.glyphport.getFileName
 import com.sebiai.glyphport.screenPaddingModifier
 import com.sebiai.glyphport.ui.theme.GlyphPortTheme
 
@@ -61,7 +64,31 @@ fun PortingSuccessScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
                     OutlinedButton(
-                        onClick = {}
+                        onClick = {
+                            val fileName = getFileName(context.contentResolver, portedCompositionUri)
+                            val shareCompositionIntent = Intent(Intent.ACTION_SEND).apply {
+                                // Set mime type and file
+                                type = "audio/ogg"
+                                // Using the portedCompositionUri that stems from MediaStore shows
+                                // a "random" digit in the share dialog - probably a MediaStore
+                                // id.
+                                // Try to provide all the hints we can - seems to take no effect
+                                putExtra(Intent.EXTRA_STREAM, portedCompositionUri)
+                                putExtra(Intent.EXTRA_TITLE, fileName)
+                                putExtra(Intent.EXTRA_SUBJECT, fileName)
+                                clipData = ClipData.newUri(context.contentResolver, fileName, portedCompositionUri)
+
+                                // Don't think this is needed since it is a MediaStore uri but
+                                // better be safe than sorry. Might actually be needed since
+                                // only my app has access since it was the creator of the file
+                                // without READ_MEDIA_AUDIO or READ_EXTERNAL_STORAGE permission.
+                                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+                            }
+                            context.startActivity(Intent.createChooser(shareCompositionIntent,
+                                context.getString(
+                                    R.string.sharing_composition_picker_title
+                                )))
+                        }
                     ) {
                         Icon(
                             modifier = Modifier.size(20.dp),
