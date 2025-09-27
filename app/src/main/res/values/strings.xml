@@ -10,6 +10,9 @@
     <string name="ok_confirmation">OK</string>
     <string name="next_action">Next</string>
 
+    <!-- Content description stuff -->
+    <string name="content_description_top_app_bar_back_arrow_icon">Navigate up</string>
+
     <!-- Composition validation -->
     <string name="composition_validation_io_error">Could not read the file. Please try again.\nIf this error persists, please contact the developer.</string>
     <string name="composition_validation_invalid_extension">Invalid extension - only \'.ogg\' files are supported.</string>
@@ -32,8 +35,10 @@
     <string name="no_transformer_groups_info_heading">No devices to port to</string>
     <string name="no_transformer_groups_info_subtitle">Sorry, %s compositions are currently not supported yet.</string>
 
-    <!-- Content description stuff -->
-    <string name="content_description_top_app_bar_back_arrow_icon">Navigate up</string>
+    <!-- Table Stuff -->
+    <string name="file_title_table_heading">Title</string>
+    <string name="port_to_table_heading">Port to</string>
+    <string name="transformer_table_heading">Transformer</string>
 
     <!-- Transformer -->
     <string name="default_light_data_transformer_name">The Classic</string>
