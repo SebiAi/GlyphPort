@@ -46,7 +46,7 @@ fun PortingSuccessScreen(
     val portedCompositionFilePath by rememberSaveable {
         mutableStateOf(
             getFilePathForLocalMediaStore(
-                context,
+                context.contentResolver,
                 portedCompositionUri
             ).removePrefix("/storage/emulated/0/")
         )

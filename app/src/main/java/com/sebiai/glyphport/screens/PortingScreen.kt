@@ -99,7 +99,7 @@ fun PortingScreen(
                         MediaStore.VOLUME_EXTERNAL_PRIMARY
                     )
 
-                    val oldFile = File(getFileName(context, composition.uri))
+                    val oldFile = File(getFileName(context.contentResolver, composition.uri))
                     val newFileName = "${oldFile.nameWithoutExtension}_${context.getString(R.string.ported_to_phone_model, transformer.outputs.phoneName)}-${transformer.getName(context)}.${oldFile.extension}"
                     val newCompositionDetails = ContentValues().apply {
                         // If the file already exists, it will automatically get a suffix - yay

@@ -1,5 +1,6 @@
 package com.sebiai.glyphport
 
+import android.content.ContentResolver
 import android.content.Context
 import android.net.Uri
 import android.os.Build
@@ -67,22 +68,22 @@ fun <T: AbstractSession> safeHandleFFmpegKitSession(
     }
 }
 
-fun getFileName(context: Context, uri: Uri): String {
+fun getFileName(contentResolver: ContentResolver, uri: Uri): String {
     require(!uri.isRelative)
     require(uri.scheme!!.lowercase() == "content")
     // https://developer.android.com/training/secure-file-sharing/retrieve-info#RetrieveFileInfo
-    return context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+    return contentResolver.query(uri, null, null, null, null)?.use { cursor ->
         val nameIndex = cursor.getColumnIndexOrThrow(OpenableColumns.DISPLAY_NAME)
         cursor.moveToFirst()
         cursor.getString(nameIndex)
     }.orEmpty()
 }
 
-fun getFilePathForLocalMediaStore(context: Context, uri: Uri): String {
+fun getFilePathForLocalMediaStore(contentResolver: ContentResolver, uri: Uri): String {
     require(!uri.isRelative)
     require(uri.scheme!!.lowercase() == "content")
 
-    return context.contentResolver.query(uri, arrayOf(MediaStore.Audio.Media.DATA), null, null, null)?.use { cursor ->
+    return contentResolver.query(uri, arrayOf(MediaStore.Audio.Media.DATA), null, null, null)?.use { cursor ->
         val dataIndex = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA)
         cursor.moveToFirst()
         cursor.getString(dataIndex)
