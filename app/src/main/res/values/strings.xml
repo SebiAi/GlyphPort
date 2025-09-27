@@ -38,6 +38,13 @@
     <string name="porting_creating_unique_file_failed_dialog_reason">Could not create unique file. Please manually delete files in\n\"%1$s\"\nthat are named\n\"%2$s\"</string>
     <string name="port_composition_action">Port Composition</string>
 
+    <!-- Porting Success Screen -->
+    <string name="ported_successfully_heading">Ported successfully!</string>
+    <string name="ported_successfully_subtitle">The ported composition was saved in\n%1$s\n\nYou can now select this composition as a ringtone or notification sound in the audio settings.</string>
+    <string name="sharing_composition_picker_title">Share composition using</string>
+    <string name="share_action">Share</string>
+    <string name="port_another_composition">Port another</string>
+
     <!-- Table Stuff -->
     <string name="file_title_table_heading">Title</string>
     <string name="file_made_for_phone_table_heading">Made for</string>

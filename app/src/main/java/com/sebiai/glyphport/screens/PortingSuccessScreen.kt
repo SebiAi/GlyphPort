@@ -19,10 +19,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -32,7 +28,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import com.sebiai.glyphport.R
 import com.sebiai.glyphport.composables.CenteredTitleWithSubtitle
-import com.sebiai.glyphport.getFilePathForLocalMediaStore
+import com.sebiai.glyphport.composables.RoundedContentContainer
+import com.sebiai.glyphport.compositionsSaveDirectory
 import com.sebiai.glyphport.screenPaddingModifier
 import com.sebiai.glyphport.ui.theme.GlyphPortTheme
 
@@ -43,52 +40,50 @@ fun PortingSuccessScreen(
     onStartOverButtonClicked: () -> Unit,
 ) {
     val context = LocalContext.current
-    val portedCompositionFilePath by rememberSaveable {
-        mutableStateOf(
-            getFilePathForLocalMediaStore(
-                context.contentResolver,
-                portedCompositionUri
-            ).removePrefix("/storage/emulated/0/")
-        )
-    }
 
     Column(
         modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        CenteredTitleWithSubtitle(
-            modifier = Modifier.fillMaxWidth(),
-            title = "Ported successfully!",
-            subtitle = "The ported composition was saved in\n\"$portedCompositionFilePath\""
-        )
-        Spacer(modifier = Modifier.height(12.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            OutlinedButton(
-                onClick = {}
-            ) {
-                Icon(
-                    modifier = Modifier.size(20.dp),
-                    imageVector = Icons.Outlined.Share,
-                    contentDescription = null
+        RoundedContentContainer {
+            Column {
+                CenteredTitleWithSubtitle(
+                    modifier = Modifier.fillMaxWidth(),
+                    title = stringResource(R.string.ported_successfully_heading),
+                    subtitle = stringResource(
+                        R.string.ported_successfully_subtitle,
+                        compositionsSaveDirectory
+                    )
                 )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    style = MaterialTheme.typography.titleLarge,
-                    text = "Share"
-                )
-            }
-            Button(
-                onClick = onStartOverButtonClicked
-            ) {
-                Text(
-                    style = MaterialTheme.typography.titleLarge,
-                    text = stringResource(R.string.start_over),
-                    fontWeight = FontWeight.SemiBold
-                )
+                Spacer(modifier = Modifier.height(12.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    OutlinedButton(
+                        onClick = {}
+                    ) {
+                        Icon(
+                            modifier = Modifier.size(20.dp),
+                            imageVector = Icons.Outlined.Share,
+                            contentDescription = null
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            style = MaterialTheme.typography.titleLarge,
+                            text = stringResource(R.string.share_action)
+                        )
+                    }
+                    Button(
+                        onClick = onStartOverButtonClicked
+                    ) {
+                        Text(
+                            style = MaterialTheme.typography.titleLarge,
+                            text = stringResource(R.string.port_another_composition),
+                            fontWeight = FontWeight.SemiBold
+                        )
+                    }
+                }
             }
         }
     }
