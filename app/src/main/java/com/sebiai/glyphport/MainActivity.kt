@@ -21,6 +21,7 @@ import com.sebiai.glyphport.navigation.getTitleForRoute
 import com.sebiai.glyphport.navigation.routes.StartNavRoute
 import com.sebiai.glyphport.ui.theme.GlyphPortTheme
 
+// TODO: Implement GitHub update checking
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

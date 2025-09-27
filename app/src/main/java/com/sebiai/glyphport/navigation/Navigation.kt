@@ -113,5 +113,6 @@ fun AppNavHost(
                 )
             },
         )
+        // TODO: Implement About screen reachable through the TopAppBar
     }
 }
