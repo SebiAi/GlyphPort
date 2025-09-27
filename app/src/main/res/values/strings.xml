@@ -4,7 +4,6 @@
     <!-- Top App Bar titles -->
     <string name="top_app_bar_title_transformer_group_selection_screen">Device selection</string>
     <string name="top_app_bar_title_porting_screen">Confirm Porting</string>
-    <string name="top_app_bar_title_porting_success_screen">Successfully Ported</string>
 
     <!-- General -->
     <string name="ok_confirmation">OK</string>
