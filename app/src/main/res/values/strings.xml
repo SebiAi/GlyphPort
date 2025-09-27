@@ -31,6 +31,12 @@
     <string name="no_transformer_groups_info_heading">No devices to port to</string>
     <string name="no_transformer_groups_info_subtitle">Sorry, %s compositions are currently not supported yet.</string>
 
+    <!-- Porting Screen -->
+    <string name="porting_failed_dialog_title">Porting Failed</string>
+    <string name="porting_general_writing_failed_dialog_reason">Writing the new composition failed. Please try again.\nIf this error persists, please contact the developer.</string>
+    <string name="porting_creating_unique_file_failed_dialog_reason">Could not create unique file. Please manually delete files in\n\"%1$s\"\nthat are named\n\"%2$s\"</string>
+    <string name="port_composition_action">Port Composition</string>
+
     <!-- Table Stuff -->
     <string name="file_title_table_heading">Title</string>
     <string name="file_made_for_phone_table_heading">Made for</string>
@@ -43,5 +49,5 @@
     <string name="default_light_data_transfer_description">A simple classic port of the composition.</string>
 
     <!-- Other -->
-    <string name="ported_to_phone_model">Ported to %s</string>
+    <string name="file_name_ported_to_phone_model">Ported to %s</string>
 </resources>

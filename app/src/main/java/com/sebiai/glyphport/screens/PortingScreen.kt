@@ -17,10 +17,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -29,6 +31,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -48,6 +51,7 @@ import com.sebiai.glyphport.dataclasses.transformer.DefaultPhone1ToPhone2LightDa
 import com.sebiai.glyphport.getAppNameWithMajorVersion
 import com.sebiai.glyphport.getFileName
 import com.sebiai.glyphport.screenPaddingModifier
+import com.sebiai.glyphport.tryDeleteMediaStoreFile
 import com.sebiai.glyphport.ui.theme.GlyphPortTheme
 import kotlinx.coroutines.launch
 import java.io.File
@@ -64,6 +68,27 @@ fun PortingScreen(
     val lifecycleOwner = LocalLifecycleOwner.current
     var portingInProgress by rememberSaveable { mutableStateOf(false) }
 
+    var showErrorOccurredDialog by rememberSaveable { mutableStateOf(false) }
+    var errorOccurredDialogReason by rememberSaveable { mutableStateOf("") }
+
+    // Dialog for invalid compositions
+    if (showErrorOccurredDialog) {
+        AlertDialog(
+            onDismissRequest = { showErrorOccurredDialog = false },
+            title = { Text(text = stringResource(R.string.porting_failed_dialog_title)) },
+            text = {
+                Text(
+                    text = errorOccurredDialogReason
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = { showErrorOccurredDialog = false }
+                ) { Text(text = stringResource(R.string.ok_confirmation)) }
+            }
+        )
+    }
+
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -79,7 +104,6 @@ fun PortingScreen(
         PortButton(
             portingInProgress = portingInProgress,
             onClick = {
-                // TODO: [NOW] Better error and exception handling
                 portingInProgress = true
 
                 lifecycleOwner.lifecycleScope.launch {
@@ -93,16 +117,17 @@ fun PortingScreen(
                         custom2 = if (transformer.outputs == PhoneModel.PHONE1) "5Cols" else "${transformedLightData.columns}Cols"
                     )
 
-                    MediaStore.getExternalVolumeNames(context)
                     // https://developer.android.com/training/data-storage/shared/media#add-item
                     val audioCollection = MediaStore.Audio.Media.getContentUri(
                         MediaStore.VOLUME_EXTERNAL_PRIMARY
                     )
 
                     val oldFile = File(getFileName(context.contentResolver, composition.uri))
-                    val newFileName = "${oldFile.nameWithoutExtension}_${context.getString(R.string.ported_to_phone_model, transformer.outputs.phoneName)}-${transformer.getName(context)}.${oldFile.extension}"
+                    val newFileName = "${oldFile.nameWithoutExtension}_${context.getString(R.string.file_name_ported_to_phone_model, transformer.outputs.phoneName)}-${transformer.getName(context)}.${oldFile.extension}"
                     val newCompositionDetails = ContentValues().apply {
                         // If the file already exists, it will automatically get a suffix - yay
+                        // At least until some point - after 32 files it throws when going from pending
+                        // to normal
                         put(MediaStore.Audio.Media.DISPLAY_NAME, newFileName)
                         // put(MediaStore.Audio.Media.CONTENT_TYPE, "audio/ogg") // Not sure about this one
                         put(MediaStore.Audio.Media.IS_RINGTONE, 1)
@@ -119,26 +144,48 @@ fun PortingScreen(
                     )!!
 
                     try {
-                        CompositionMetadataWriter(
+                        val success = CompositionMetadataWriter(
                             audioFile = composition.uri,
                             outputFile = destinationUri
                         ).write(
                             context = context,
                             metadata = newMetadata.encode()
                         )
+                        if (!success) {
+                            showErrorOccurredDialog = true
+                            errorOccurredDialogReason =
+                                context.getString(R.string.porting_general_writing_failed_dialog_reason)
+                        } else {
+                            newCompositionDetails.clear()
+                            newCompositionDetails.put(MediaStore.Audio.Media.IS_PENDING, 0)
+                            try {
+                                context.contentResolver.update(
+                                    destinationUri,
+                                    newCompositionDetails,
+                                    null,
+                                    null
+                                )
+                            } catch (e: IllegalStateException) {
+                                if (
+                                    e.message == null ||
+                                    "Failed to build unique file" !in e.message!!
+                                ) throw e
+                                showErrorOccurredDialog = true
+                                errorOccurredDialogReason = context.getString(
+                                    R.string.porting_creating_unique_file_failed_dialog_reason,
+                                    compositionsSaveDirectory,
+                                    newFileName
+                                )
+                            }
+                        }
                     } finally {
-                        newCompositionDetails.clear()
-                        newCompositionDetails.put(MediaStore.Audio.Media.IS_PENDING, 0)
-                        context.contentResolver.update(
-                            destinationUri,
-                            newCompositionDetails,
-                            null,
-                            null
-                        )
-
                         portingInProgress = false
                     }
-                    onPortingSuccess(destinationUri)
+                    if (!showErrorOccurredDialog) {
+                        onPortingSuccess(destinationUri)
+                    } else {
+                        tryDeleteMediaStoreFile(context.contentResolver, destinationUri)
+                    }
                 }
             }
         )
@@ -170,7 +217,7 @@ private fun PortButton(
         }
         Text(
             style = MaterialTheme.typography.headlineMedium,
-            text = "Port Composition",
+            text = stringResource(R.string.port_composition_action),
             fontWeight = FontWeight.SemiBold
         )
     }
@@ -186,6 +233,7 @@ private fun PortingScreenPreview() {
                     .fillMaxSize(),
                 composition = compositionPreviewObject,
                 transformer = DefaultPhone1ToPhone2LightDataTransformer(),
+                userChooseTransformer = true,
                 onPortingSuccess = {}
             )
         }
