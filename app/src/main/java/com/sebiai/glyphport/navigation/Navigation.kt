@@ -1,7 +1,6 @@
 package com.sebiai.glyphport.navigation
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -19,14 +18,17 @@ import com.sebiai.glyphport.navigation.routes.PortingNavRoute
 import com.sebiai.glyphport.navigation.routes.PortingSuccessNavRoute
 import com.sebiai.glyphport.navigation.routes.StartNavRoute
 import com.sebiai.glyphport.navigation.routes.TransformerCollectionSelectionNavRoute
+import com.sebiai.glyphport.navigation.routes.TransformerSelectionNavRoute
 import com.sebiai.glyphport.navigation.routes.navigateToPortingScreen
 import com.sebiai.glyphport.navigation.routes.navigateToPortingSuccessScreenWithPopUp
 import com.sebiai.glyphport.navigation.routes.navigateToStartScreenWithPopUp
 import com.sebiai.glyphport.navigation.routes.navigateToTransformerCollectionSelectionScreen
+import com.sebiai.glyphport.navigation.routes.navigateToTransformerSelectionScreen
 import com.sebiai.glyphport.navigation.routes.portingScreenDestination
 import com.sebiai.glyphport.navigation.routes.portingSuccessScreenDestination
 import com.sebiai.glyphport.navigation.routes.startScreenDestination
 import com.sebiai.glyphport.navigation.routes.transformerCollectionSelectionScreenDestination
+import com.sebiai.glyphport.navigation.routes.transformerSelectionScreenDestination
 
 fun getTitleForRoute(context: Context, route: String): String {
     // routes have the qualifiedName of the class plus a url like arguments
@@ -35,6 +37,7 @@ fun getTitleForRoute(context: Context, route: String): String {
     val titleRes = when (routeQualifiedName) {
         StartNavRoute::class.qualifiedName!! -> R.string.app_name
         TransformerCollectionSelectionNavRoute::class.qualifiedName!! -> R.string.top_app_bar_title_transformer_group_selection_screen
+        TransformerSelectionNavRoute::class.qualifiedName!! -> R.string.top_app_bar_title_transformer_selection_screen
         PortingNavRoute::class.qualifiedName!! -> R.string.top_app_bar_title_porting_screen
         PortingSuccessNavRoute::class.qualifiedName!! -> R.string.app_name
         else -> null
@@ -89,9 +92,12 @@ fun AppNavHost(
             navigateToPortingScreen = { userChooseTransformer ->
                 navController.navigateToPortingScreen(userChooseTransformer)
             },
-            navigateToTransformerSelectionScreen = {
-                // TODO: navigateToTransformerSelectionScreen
-                Log.d("Navigation", "navigateToTransformerSelectionScreen")
+            navigateToTransformerSelectionScreen = navController::navigateToTransformerSelectionScreen
+        )
+        transformerSelectionScreenDestination(
+            appViewModel = appViewModel,
+            navigateToPortingScreen = { userChooseTransformer ->
+                navController.navigateToPortingScreen(userChooseTransformer)
             }
         )
         portingScreenDestination(

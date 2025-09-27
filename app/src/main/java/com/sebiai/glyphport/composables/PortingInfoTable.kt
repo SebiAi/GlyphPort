@@ -34,7 +34,7 @@ fun PortingInfoTable(
                 value = portingTarget.phoneName
             ),
             SimpleTableRowConfig(
-                title = stringResource(R.string.transformer_table_heading),
+                title = stringResource(R.string.port_mode_table_heading),
                 value = transformerName,
                 visible = showTransformerRow
             )
