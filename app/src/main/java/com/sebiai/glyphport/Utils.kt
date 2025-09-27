@@ -90,6 +90,13 @@ fun getFilePathForLocalMediaStore(contentResolver: ContentResolver, uri: Uri): S
     }.orEmpty()
 }
 
+fun tryDeleteMediaStoreFile(contentResolver: ContentResolver, uri: Uri): Boolean {
+    require(!uri.isRelative)
+    require(uri.scheme!!.lowercase() == "content")
+
+    return contentResolver.delete(uri, null) == 1
+}
+
 fun getAppNameWithMajorVersion(context: Context): String {
     val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
     val majorVersion = packageInfo.versionName!!.substringBefore('.').removePrefix("v")
