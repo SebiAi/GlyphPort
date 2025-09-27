@@ -1,9 +1,12 @@
 package com.sebiai.glyphport.screens
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -12,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -41,33 +43,37 @@ fun TransformerSelectionScreen(
         mutableIntStateOf(0)
     }
 
-    Box(
+    Column(
         modifier = modifier
     ) {
-        RoundedContentContainer(
-            modifier = Modifier.align(Alignment.Center)
+        Column(
+            modifier = Modifier.weight(1f),
+            verticalArrangement = Arrangement.Center
         ) {
-            Text(
-                style = MaterialTheme.typography.titleLarge,
-                text = stringResource(R.string.transformer_selection_heading)
-            )
-            Spacer(
-                modifier = Modifier.height(18.dp)
-            )
-            SingleSelectButtonColumn(
-                options = transformerCollection.transformers.map {
-                    SelectButtonColumnConfig(
-                        text = it.getName(context),
-                        description = it.getDescription(context)
-                    )
-                },
-                selectedIndex = selectedIndex,
-                onClick = { selectedIndex = it }
-            )
+            RoundedContentContainer {
+                Text(
+                    style = MaterialTheme.typography.titleLarge,
+                    text = stringResource(R.string.transformer_selection_heading)
+                )
+                Spacer(
+                    modifier = Modifier.height(18.dp)
+                )
+                SingleSelectButtonColumn(
+                    modifier = Modifier.verticalScroll(
+                        state = rememberScrollState()
+                    ),
+                    options = transformerCollection.transformers.map {
+                        SelectButtonColumnConfig(
+                            text = it.getName(context),
+                            description = it.getDescription(context)
+                        )
+                    },
+                    selectedIndex = selectedIndex,
+                    onClick = { selectedIndex = it }
+                )
+            }
         }
         EndAlignedSingleTextButtonRow(
-            modifier = Modifier
-                .align(Alignment.BottomCenter),
             text = stringResource(R.string.next_action),
             onClick = { onNextButtonClicked(transformerCollection.transformers.elementAt(selectedIndex)) },
             enabled = selectedIndex >= 0

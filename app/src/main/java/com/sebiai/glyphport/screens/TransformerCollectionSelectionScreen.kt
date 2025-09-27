@@ -1,12 +1,14 @@
 package com.sebiai.glyphport.screens
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -47,14 +49,15 @@ fun TransformerCollectionSelectionScreen(
         mutableIntStateOf(phoneModelOptions.indexOf(currentPhoneModel()))
     }
 
-    Box(
+    Column(
         modifier = modifier
     ) {
         if (phoneModelOptions.isEmpty()) {
             Column(
                 modifier = Modifier
-                    .align(Alignment.Center)
+                    .weight(1f)
                     .padding(horizontal = 6.dp),
+                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 CenteredTitleWithSubtitle(
@@ -73,25 +76,29 @@ fun TransformerCollectionSelectionScreen(
                 }
             }
         } else {
-            RoundedContentContainer(
-                modifier = Modifier.align(Alignment.Center)
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.Center
             ) {
-                Text(
-                    style = MaterialTheme.typography.titleLarge,
-                    text = stringResource(R.string.transformer_group_selection_heading)
-                )
-                Spacer(
-                    modifier = Modifier.height(18.dp)
-                )
-                SingleSelectButtonColumn(
-                    options = phoneModelOptions.map { SelectButtonColumnConfig(it.phoneName) },
-                    selectedIndex = selectedIndex,
-                    onClick = { selectedIndex = it }
-                )
+                RoundedContentContainer {
+                    Text(
+                        style = MaterialTheme.typography.titleLarge,
+                        text = stringResource(R.string.transformer_group_selection_heading)
+                    )
+                    Spacer(
+                        modifier = Modifier.height(18.dp)
+                    )
+                    SingleSelectButtonColumn(
+                        modifier = Modifier.verticalScroll(
+                            state = rememberScrollState()
+                        ),
+                        options = phoneModelOptions.map { SelectButtonColumnConfig(it.phoneName) },
+                        selectedIndex = selectedIndex,
+                        onClick = { selectedIndex = it }
+                    )
+                }
             }
             EndAlignedSingleTextButtonRow(
-                modifier = Modifier
-                    .align(Alignment.BottomCenter),
                 text = stringResource(R.string.next_action),
                 onClick = { onNextButtonClicked(phoneModelOptions.elementAt(selectedIndex)) },
                 enabled = selectedIndex >= 0
