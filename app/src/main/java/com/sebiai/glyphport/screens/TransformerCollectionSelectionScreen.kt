@@ -92,7 +92,7 @@ fun TransformerCollectionSelectionScreen(
             EndAlignedSingleTextButtonRow(
                 modifier = Modifier
                     .align(Alignment.BottomCenter),
-                text = stringResource(R.string.button_next),
+                text = stringResource(R.string.next_action),
                 onClick = { onNextButtonClicked(phoneModelOptions.elementAt(selectedIndex)) },
                 enabled = selectedIndex >= 0
             )

@@ -150,7 +150,7 @@ fun StartScreen(
             )
         }
         EndAlignedSingleTextButtonRow(
-            text = stringResource(R.string.button_next),
+            text = stringResource(R.string.next_action),
             onClick = onNextButtonClicked,
             enabled = composition != null
         )
