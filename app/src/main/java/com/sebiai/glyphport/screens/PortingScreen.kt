@@ -36,7 +36,7 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import com.sebiai.glyphport.PhoneModel
 import com.sebiai.glyphport.R
-import com.sebiai.glyphport.composables.CompositionInfoTable
+import com.sebiai.glyphport.composables.PortingInfoTable
 import com.sebiai.glyphport.composables.RoundedLargeButton
 import com.sebiai.glyphport.compositionsSaveDirectory
 import com.sebiai.glyphport.dataclasses.Composition
@@ -57,6 +57,7 @@ fun PortingScreen(
     modifier: Modifier = Modifier,
     composition: Composition,
     transformer: LightDataTransformer,
+    userChooseTransformer: Boolean,
     onPortingSuccess: (Uri) -> Unit
 ) {
     val context = LocalContext.current
@@ -68,8 +69,11 @@ fun PortingScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        CompositionInfoTable(
-            composition = composition
+        PortingInfoTable(
+            composition = composition,
+            portingTarget = transformer.outputs,
+            transformerName = transformer.getName(LocalContext.current),
+            showTransformerRow = userChooseTransformer
         )
         Spacer(modifier = Modifier.height(18.dp))
         PortButton(

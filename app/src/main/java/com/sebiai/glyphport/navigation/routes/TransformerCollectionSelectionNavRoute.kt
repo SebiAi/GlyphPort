@@ -21,7 +21,7 @@ fun NavController.navigateToTransformerCollectionSelectionScreen() {
 fun NavGraphBuilder.transformerCollectionSelectionScreenDestination(
     appViewModel: AppViewModel,
     popUpToStartScreen: () -> Unit,
-    navigateToPortingScreen: () -> Unit,
+    navigateToPortingScreen: (Boolean) -> Unit,
     navigateToTransformerSelectionScreen: () -> Unit
 ) {
     composable<TransformerCollectionSelectionNavRoute> {
@@ -40,7 +40,7 @@ fun NavGraphBuilder.transformerCollectionSelectionScreenDestination(
                 )!!
                 if (transformerCollection.transformers.size <= 1) {
                     appViewModel.updateSelectedTransformer(transformerCollection.transformers.first())
-                    navigateToPortingScreen()
+                    navigateToPortingScreen(false) // User did not choose the transformer
                 }
                 else {
                     appViewModel.updateSelectedTransformerCollection(transformerCollection)

@@ -21,7 +21,6 @@ import com.sebiai.glyphport.navigation.routes.StartNavRoute
 import com.sebiai.glyphport.navigation.routes.TransformerCollectionSelectionNavRoute
 import com.sebiai.glyphport.navigation.routes.navigateToPortingScreen
 import com.sebiai.glyphport.navigation.routes.navigateToPortingSuccessScreenWithPopUp
-import com.sebiai.glyphport.navigation.routes.navigateToStartScreen
 import com.sebiai.glyphport.navigation.routes.navigateToStartScreenWithPopUp
 import com.sebiai.glyphport.navigation.routes.navigateToTransformerCollectionSelectionScreen
 import com.sebiai.glyphport.navigation.routes.portingScreenDestination
@@ -87,7 +86,9 @@ fun AppNavHost(
                     fromRoute = StartNavRoute
                 )
             },
-            navigateToPortingScreen = navController::navigateToPortingScreen,
+            navigateToPortingScreen = { userChooseTransformer ->
+                navController.navigateToPortingScreen(userChooseTransformer)
+            },
             navigateToTransformerSelectionScreen = {
                 // TODO: navigateToTransformerSelectionScreen
                 Log.d("Navigation", "navigateToTransformerSelectionScreen")
@@ -98,7 +99,9 @@ fun AppNavHost(
             popUpToPortingSuccessScreen = {
                 navController.navigateToPortingSuccessScreenWithPopUp(
                     portedCompositionUri = it,
-                    fromRoute = PortingNavRoute
+                    // When the transformer collection is not set then the user did not choose
+                    // a transformer - it was assigned to him
+                    fromRoute = PortingNavRoute(appViewModel.appState.value.selectedTransformerCollection != null)
                 )
             }
         )
