@@ -11,7 +11,7 @@ class DefaultPhone1ToPhone2LightDataTransformer(ioDispatcher: CoroutineDispatche
     override val nameStringRes: Int
         get() = R.string.default_light_data_transformer_name
     override val descriptionStringRes: Int
-        get() = R.string.default_light_data_transfer_description
+        get() = R.string.default_light_data_transformer_description
 
     override val handles: PhoneModel
         get() = PhoneModel.PHONE1

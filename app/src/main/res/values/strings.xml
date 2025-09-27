@@ -53,7 +53,7 @@
 
     <!-- Transformer -->
     <string name="default_light_data_transformer_name">The Classic</string>
-    <string name="default_light_data_transfer_description">A simple classic port of the composition.</string>
+    <string name="default_light_data_transformer_description">A simple classic port of the composition.</string>
 
     <!-- Other -->
     <string name="file_name_ported_to_phone_model">Ported to %s</string>
