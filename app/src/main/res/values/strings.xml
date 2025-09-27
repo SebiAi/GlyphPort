@@ -30,6 +30,7 @@
     <string name="transformer_group_selection_heading">Port to</string>
     <string name="no_transformer_groups_info_heading">No devices to port to</string>
     <string name="no_transformer_groups_info_subtitle">Sorry, %s compositions are currently not supported yet.</string>
+    <string name="return_to_beginning">Return to beginning</string>
 
     <!-- Porting Screen -->
     <string name="porting_failed_dialog_title">Porting Failed</string>
