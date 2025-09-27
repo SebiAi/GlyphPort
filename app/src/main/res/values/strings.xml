@@ -24,10 +24,6 @@
     <!-- Start Screen -->
     <string name="button_select_composition">Select Composition</string>
     <string name="supported_formats_hint">Supported formats: ogg</string>
-    <string name="button_next">Next</string>
-    <string name="file_name_table_heading">File</string>
-    <string name="file_made_for_phone_table_heading">Made for</string>
-    <string name="file_number_of_columns_heading">Columns</string>
     <string name="invalid_composition_dialog_title">Invalid Composition</string>
 
     <!-- Transformer Group Selection Screen -->
@@ -37,6 +33,8 @@
 
     <!-- Table Stuff -->
     <string name="file_title_table_heading">Title</string>
+    <string name="file_made_for_phone_table_heading">Made for</string>
+    <string name="file_number_of_columns_heading">Columns</string>
     <string name="port_to_table_heading">Port to</string>
     <string name="transformer_table_heading">Transformer</string>
 
