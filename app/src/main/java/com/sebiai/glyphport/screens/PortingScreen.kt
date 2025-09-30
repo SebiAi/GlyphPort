@@ -114,7 +114,7 @@ fun PortingScreen(
                 lifecycleOwner.lifecycleScope.launch {
                     val transformedLightData = transformer.transform(composition.lightData)
                     val newMetadata = DecodedCompositionMetadata(
-                        title = composition.metadata.title,
+                        title = "${composition.metadata.title} - Ported to ${transformer.outputs.phoneName}",
                         album = getAppNameWithMajorVersion(context),
                         composer = "v1-${transformer.outputs.build} Glyph Composer",
                         authorLightData = transformedLightData,
