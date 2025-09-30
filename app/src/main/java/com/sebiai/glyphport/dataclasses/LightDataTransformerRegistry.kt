@@ -1,9 +1,11 @@
 package com.sebiai.glyphport.dataclasses
 
 import com.sebiai.glyphport.PhoneModel
-import com.sebiai.glyphport.R
 import com.sebiai.glyphport.dataclasses.transformer.DefaultPhone1ToPhone2LightDataTransformer
-import kotlinx.coroutines.Dispatchers
+import com.sebiai.glyphport.dataclasses.transformer.DefaultPhone1ToPhone2aLightDataTransformer
+import com.sebiai.glyphport.dataclasses.transformer.DefaultPhone1ToPhone2aPlusLightDataTransformer
+import com.sebiai.glyphport.dataclasses.transformer.DefaultPhone1ToPhone3LightDataTransformer
+import com.sebiai.glyphport.dataclasses.transformer.DefaultPhone1ToPhone3aAndProLightDataTransformer
 
 // Interface would be required here if we want to make it testable.
 object LightDataTransformerRegistry {
@@ -33,21 +35,34 @@ object LightDataTransformerRegistry {
                 outputs = PhoneModel.PHONE2,
                 transformers = listOf(
                     DefaultPhone1ToPhone2LightDataTransformer(),
-                    object : LightDataTransformer(Dispatchers.IO) {
-                        override val nameStringRes: Int
-                            get() = R.string.testing_light_data_transformer_name
-                        override val descriptionStringRes: Int
-                            get() = R.string.testing_light_data_transformer_description
-                        override val handles: PhoneModel
-                            get() = PhoneModel.PHONE1
-                        override val outputs: PhoneModel
-                            get() = PhoneModel.PHONE2
-
-                        override fun transformImpl(lightData: CompositionLightData): CompositionLightData {
-                            return lightData
-                        }
-
-                    }
+                )
+            ),
+            LightDataTransformerCollection(
+                handles = PhoneModel.PHONE1,
+                outputs = PhoneModel.PHONE2A,
+                transformers = listOf(
+                    DefaultPhone1ToPhone2aLightDataTransformer()
+                )
+            ),
+            LightDataTransformerCollection(
+                handles = PhoneModel.PHONE1,
+                outputs = PhoneModel.PHONE2A_PLUS,
+                transformers = listOf(
+                    DefaultPhone1ToPhone2aPlusLightDataTransformer()
+                )
+            ),
+            LightDataTransformerCollection(
+                handles = PhoneModel.PHONE1,
+                outputs = PhoneModel.PHONE3A_AND_PRO,
+                transformers = listOf(
+                    DefaultPhone1ToPhone3aAndProLightDataTransformer()
+                )
+            ),
+            LightDataTransformerCollection(
+                handles = PhoneModel.PHONE1,
+                outputs = PhoneModel.PHONE3,
+                transformers = listOf(
+                    DefaultPhone1ToPhone3LightDataTransformer()
                 )
             )
             // TODO: MORE TRANSFORMERS
