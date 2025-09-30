@@ -13,7 +13,7 @@ object CompositionLightDataLoader {
             .map { it.trim().removeSuffix(",") }
             .filter { it.isNotEmpty() }
             .map { it.split(',') }
-            .map { it.map { brightness -> brightness.toUInt() } }
+            .map { it.map { brightness -> brightness.toUShort() } }
 
         return CompositionLightData(lightData)
     }

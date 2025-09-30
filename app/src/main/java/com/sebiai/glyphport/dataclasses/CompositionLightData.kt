@@ -1,7 +1,5 @@
 package com.sebiai.glyphport.dataclasses
 
-import kotlin.math.min
-
 /**
  * @property lightData The raw light data. Outer list must contains all rows, inner list must
  * contain the elements in the row.
@@ -10,13 +8,13 @@ import kotlin.math.min
  * @throws InconsistentDataLength If rows in the light data have an inconsistent size.
  */
 class CompositionLightData(
-    lightData: List<List<UInt>>
-): Iterable<List<UInt>> {
+    lightData: List<List<UShort>>
+): Iterable<List<UShort>> {
     open class InvalidMetadataException(message: String): Exception(message)
     class EmptyLightDataException: InvalidMetadataException("Light data is empty")
     class InconsistentDataLength: InvalidMetadataException("Different lengths for lines in light data")
 
-    private val flatLightData: List<UInt>
+    private val flatLightData: List<UShort>
     val columns: Int
     private val rows: Int
     init {
@@ -25,13 +23,14 @@ class CompositionLightData(
         if (lightData.any { it.size != columns }) throw InconsistentDataLength()
         rows = lightData.size
 
-        // Since it is an UInt it can't be less than 0 => only upper range check
+        // Since it is an UShort it can't be less than 0 => only upper range check
         // Technically the highest value should be 4095 but some compositions
         // use 4096 as upper range??
-        flatLightData = lightData.map { it.map { value -> min(value, 4095u) } }.flatten()
+        val upperRange: UShort = 4095u
+        flatLightData = lightData.map { it.map { value -> minOf(value, upperRange) } }.flatten()
     }
 
-    fun getRow(rowIndex: Int): List<UInt> {
+    fun getRow(rowIndex: Int): List<UShort> {
         require(rowIndex >= 0) { "rowIndex must be 0 or greater" }
         if (rowIndex >= rows) throw IndexOutOfBoundsException()
 
@@ -39,16 +38,16 @@ class CompositionLightData(
         return flatLightData.subList(fromIndex, fromIndex + columns)
     }
 
-    fun getLightData(): List<List<UInt>> {
+    fun getLightData(): List<List<UShort>> {
         assert(flatLightData.size % columns == 0)
         return flatLightData.chunked(columns)
     }
 
-    override fun iterator(): Iterator<List<UInt>> {
-        return object: Iterator<List<UInt>>{
+    override fun iterator(): Iterator<List<UShort>> {
+        return object: Iterator<List<UShort>>{
             private var rowIndex = 0
 
-            override fun next(): List<UInt> {
+            override fun next(): List<UShort> {
                 val result = getRow(rowIndex)
                 rowIndex++
                 return result
