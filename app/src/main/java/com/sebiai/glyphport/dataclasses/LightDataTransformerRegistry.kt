@@ -6,6 +6,7 @@ import com.sebiai.glyphport.dataclasses.transformer.DefaultPhone1ToPhone2aLightD
 import com.sebiai.glyphport.dataclasses.transformer.DefaultPhone1ToPhone2aPlusLightDataTransformer
 import com.sebiai.glyphport.dataclasses.transformer.DefaultPhone1ToPhone3LightDataTransformer
 import com.sebiai.glyphport.dataclasses.transformer.DefaultPhone1ToPhone3aAndProLightDataTransformer
+import com.sebiai.glyphport.dataclasses.transformer.DefaultPhone2ToPhone1LightDataTransformer
 
 // Interface would be required here if we want to make it testable.
 object LightDataTransformerRegistry {
@@ -30,6 +31,7 @@ object LightDataTransformerRegistry {
 
     private fun createTransformerCollections(): List<LightDataTransformerCollection> {
         return listOf(
+            // Phone (1) to X
             LightDataTransformerCollection(
                 handles = PhoneModel.PHONE1,
                 outputs = PhoneModel.PHONE2,
@@ -63,6 +65,14 @@ object LightDataTransformerRegistry {
                 outputs = PhoneModel.PHONE3,
                 transformers = listOf(
                     DefaultPhone1ToPhone3LightDataTransformer()
+                )
+            ),
+            // Phone (2) to X
+            LightDataTransformerCollection(
+                handles = PhoneModel.PHONE2,
+                outputs = PhoneModel.PHONE1,
+                transformers = listOf(
+                    DefaultPhone2ToPhone1LightDataTransformer(),
                 )
             )
             // TODO: MORE TRANSFORMERS
