@@ -20,9 +20,9 @@ class DefaultPhone1ToPhone2LightDataTransformer(ioDispatcher: CoroutineDispatche
 
     override fun transformImpl(lightData: CompositionLightData): CompositionLightData {
         // Sanity check
-        assert(5u in PhoneModel.PHONE1.supportedZones && 15u in PhoneModel.PHONE1.supportedZones && PhoneModel.PHONE1.supportedZones .size == 2)
+        assert(5u in PhoneModel.PHONE1.supportedZones && 15u in PhoneModel.PHONE1.supportedZones && PhoneModel.PHONE1.supportedZones.size == 2)
 
-        require(lightData.columns.toUInt() in PhoneModel.PHONE1.supportedZones)
+        require(lightData.columns.toUInt() in handles.supportedZones)
         if (lightData.columns == 5) {
             return transform15Cols(TransformerUtils.phone1Transform5To15Cols(lightData))
         }
