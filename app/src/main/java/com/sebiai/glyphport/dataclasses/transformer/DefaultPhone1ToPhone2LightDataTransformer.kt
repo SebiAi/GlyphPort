@@ -41,7 +41,7 @@ class DefaultPhone1ToPhone2LightDataTransformer(ioDispatcher: CoroutineDispatche
                     add(row[2]) // Battery bottom left moves to 21
                     repeat(2) { add(row[3]) } // Battery bottom right moves to 22-23, the Battery bottom right and bottom vertical (right side)
                     add(row[6]) // USB Dot moves to 24
-                    addAll(row.subList(7, 15)) // USB Line (7-14) moves to 25-32
+                    addAll(row.slice(7..14)) // USB Line (7-14) moves to 25-32
                 }
             }
         )

@@ -35,7 +35,7 @@ open class DefaultPhone1ToPhone2aLightDataTransformer(ioDispatcher: CoroutineDis
             lightData.map { row ->
                 buildList {
                     // Top left glyph of Phone (2a)
-                    addAll(row.subList(7, 15)) // USB Line (7-14) moves to 0-7, the Top left bottom 8
+                    addAll(row.slice(7..14)) // USB Line (7-14) moves to 0-7, the Top left bottom 8
                     repeat(4) { add(row[3]) } // Battery bottom right moves to 8-11
                     repeat(3) { add(row[2]) } // Battery bottom left moves to 12-14
                     repeat(3) { add(row[5]) } // Battery top left moves to 15-17

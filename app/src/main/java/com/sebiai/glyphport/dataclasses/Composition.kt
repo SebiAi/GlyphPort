@@ -15,6 +15,6 @@ val compositionPreviewObject: Composition = CompositionPreviewImpl()
 private class CompositionPreviewImpl(
     override val uri: Uri = "content://".toUri(),
     override val metadata: DecodedCompositionMetadata = DecodedCompositionMetadata(),
-    override val lightData: CompositionLightData = CompositionLightData(listOf(listOf(0u, 0u, 0u, 0u, 0u))),
+    override val lightData: CompositionLightData = CompositionLightData(listOf(listOf(0, 0, 0, 0, 0))),
     override val phoneModel: PhoneModel = PhoneModel.PHONE1
 ) : Composition

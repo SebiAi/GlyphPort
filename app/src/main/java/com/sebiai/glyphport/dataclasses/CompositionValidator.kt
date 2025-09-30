@@ -80,7 +80,7 @@ class CompositionValidator {
             }
 
             // Check light data
-            val rawLightData: List<List<UShort>>
+            val rawLightData: List<List<Short>>
             try {
                 rawLightData = parseLightData(decodedMetadata.author)
             } catch (_: NumberFormatException) {
@@ -132,13 +132,13 @@ class CompositionValidator {
         /**
          * @throws NumberFormatException If a value in the light data can not be converted to a UInt.
          */
-        private fun parseLightData(lightData: String): List<List<UShort>> {
+        private fun parseLightData(lightData: String): List<List<Short>> {
             val lightDataLines = lightData.replace("\r\n", "\n").split('\n')
             val transformedLightData = lightDataLines
                 .map { it.trim().removeSuffix(",") }
                 .filter { it.isNotEmpty() }
                 .map { it.split(',') }
-                .map { it.map { brightness -> brightness.toUShort() } }
+                .map { it.map { brightness -> brightness.toShort() } }
 
             return transformedLightData
         }

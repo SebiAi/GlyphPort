@@ -42,7 +42,7 @@ class DefaultPhone1ToPhone3aAndProLightDataTransformer(ioDispatcher: CoroutineDi
 
                     // Middle right glyph of Phone (3a)
                     repeat(3) { add(row[1]) } // Diagonal moves to 20-22
-                    addAll(row.subList(7, 15).asReversed()) // USB Line moves to 23-30
+                    addAll(row.slice(7..14).asReversed()) // USB Line moves to 23-30
 
                     // Bottom left glyph of Phone (3a)
                     repeat(2) { add(row[6]) } // USB Dot moves to 31-32
