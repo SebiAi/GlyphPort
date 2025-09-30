@@ -43,19 +43,21 @@ class DefaultPhone1ToPhone3LightDataTransformer(ioDispatcher: CoroutineDispatche
                 repeat(9) { add(0) }
                 repeat(2) { add(row[0]) } // Camera
                 repeat(5) { add(0) }
-                repeat(1) { add(row[1]) } // Diagonal
+                add(row[1]) // Diagonal
                 repeat(8) { add(0) }
                 // 4th row
                 repeat(8) { add(0) }
-                repeat(1) { add(row[0]) } // Camera
+                add(row[0])  // Camera
                 repeat(6) { add(0) }
-                repeat(1) { add(row[1]) } // Diagonal
+                add(row[1])  // Diagonal
                 repeat(9) { add(0) }
                 // 5th row
                 repeat(8) { add(0) }
-                repeat(1) { add(row[0]) } // Camera
-                repeat(5) { add(0) }
-                repeat(1) { add(row[1]) } // Diagonal
+                add(row[0])  // Camera
+                repeat(2) { add(0) }
+                add(row[0])
+                repeat(2) { add(0) }
+                add(row[1])  // Diagonal
                 repeat(10) { add(0) }
                 // 6th row
                 repeat(9) { add(0) }
