@@ -119,7 +119,7 @@ fun PortingScreen(
                         composer = "v1-${transformer.outputs.build} Glyph Composer",
                         authorLightData = transformedLightData,
                         custom1 = composition.metadata.custom1,
-                        custom2 = if (transformer.outputs == PhoneModel.PHONE1) "5Cols" else "${transformedLightData.columns}Cols"
+                        custom2 = if (transformer.outputs == PhoneModel.PHONE1) "5cols" else "${transformedLightData.columns}cols"
                     )
 
                     // https://developer.android.com/training/data-storage/shared/media#add-item
