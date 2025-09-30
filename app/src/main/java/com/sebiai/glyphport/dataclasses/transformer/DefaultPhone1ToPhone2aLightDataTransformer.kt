@@ -31,24 +31,28 @@ open class DefaultPhone1ToPhone2aLightDataTransformer(ioDispatcher: CoroutineDis
     }
 
     private fun transform15Cols(lightData: CompositionLightData): CompositionLightData {
-        return CompositionLightData(
-            lightData.map { row ->
-                buildList {
-                    // Top left glyph of Phone (2a)
-                    addAll(row.slice(7..14)) // USB Line (7-14) moves to 0-7, the Top left bottom 8
-                    repeat(4) { add(row[3]) } // Battery bottom right moves to 8-11
-                    repeat(3) { add(row[2]) } // Battery bottom left moves to 12-14
-                    repeat(3) { add(row[5]) } // Battery top left moves to 15-17
-                    repeat(4) { add(row[4]) } // Battery top right moves to 18-21
-                    repeat(2) { add(row[0]) } // Camera moves to 22-23
+        // Init final 1D array with final size
+        val columns = outputs.supportedZones[0].toInt()
+        val transformedLightData = ShortArray(columns * lightData.rows)
 
-                    // Middle right glyph of Phone (2a)
-                    add(row[1]) // Diagonal to Middle right
+        lightData.forEachIndexed { i, row ->
+            buildList {
+                // Top left glyph of Phone (2a)
+                addAll(row.slice(7..14)) // USB Line (7-14) moves to 0-7, the Top left bottom 8
+                repeat(4) { add(row[3]) } // Battery bottom right moves to 8-11
+                repeat(3) { add(row[2]) } // Battery bottom left moves to 12-14
+                repeat(3) { add(row[5]) } // Battery top left moves to 15-17
+                repeat(4) { add(row[4]) } // Battery top right moves to 18-21
+                repeat(2) { add(row[0]) } // Camera moves to 22-23
 
-                    // Bottom left glyph of Phone (2a)
-                    add(row[6])
-                }
-            }
-        )
+                // Middle right glyph of Phone (2a)
+                add(row[1]) // Diagonal to Middle right
+
+                // Bottom left glyph of Phone (2a)
+                add(row[6])
+            }.toShortArray()
+                .copyInto(transformedLightData, i * columns)
+        }
+        return CompositionLightData(transformedLightData, columns)
     }
 }

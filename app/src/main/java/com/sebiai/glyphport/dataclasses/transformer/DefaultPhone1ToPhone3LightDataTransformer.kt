@@ -32,7 +32,7 @@ class DefaultPhone1ToPhone3LightDataTransformer(ioDispatcher: CoroutineDispatche
 
     private fun transform15Cols(lightData: CompositionLightData): CompositionLightData {
         // Init final 1D array with final size
-        val columns = 625 // 25x25 matrix
+        val columns = outputs.supportedZones[0].toInt()
         val transformedLightData = ShortArray(columns * lightData.rows)
 
         lightData.forEachIndexed { i, row ->

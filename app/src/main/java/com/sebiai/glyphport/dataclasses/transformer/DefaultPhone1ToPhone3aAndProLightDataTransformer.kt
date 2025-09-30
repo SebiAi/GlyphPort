@@ -31,24 +31,28 @@ class DefaultPhone1ToPhone3aAndProLightDataTransformer(ioDispatcher: CoroutineDi
     }
 
     private fun transform15Cols(lightData: CompositionLightData): CompositionLightData {
-        return CompositionLightData(
-            lightData.map { row ->
-                buildList {
-                    // Top left glyph of Phone (3a)
-                    repeat(5) { add(row[3]) } // Battery bottom right moves to 0-4
-                    repeat(5) { add(row[2]) } // Battery bottom left moves to 5-9
-                    repeat(5) { add(row[5]) } // Battery top left moves to 10-14
-                    repeat(5) { add(row[4]) } // Battery top right moves to 15-19
+        // Init final 1D array with final size
+        val columns = outputs.supportedZones[0].toInt()
+        val transformedLightData = ShortArray(columns * lightData.rows)
 
-                    // Middle right glyph of Phone (3a)
-                    repeat(3) { add(row[1]) } // Diagonal moves to 20-22
-                    addAll(row.slice(7..14).asReversed()) // USB Line moves to 23-30
+        lightData.forEachIndexed { i, row ->
+            buildList {
+                // Top left glyph of Phone (3a)
+                repeat(5) { add(row[3]) } // Battery bottom right moves to 0-4
+                repeat(5) { add(row[2]) } // Battery bottom left moves to 5-9
+                repeat(5) { add(row[5]) } // Battery top left moves to 10-14
+                repeat(5) { add(row[4]) } // Battery top right moves to 15-19
 
-                    // Bottom left glyph of Phone (3a)
-                    repeat(2) { add(row[6]) } // USB Dot moves to 31-32
-                    repeat(3) { add(row[0]) } // Camera moves to 33-35
-                }
-            }
-        )
+                // Middle right glyph of Phone (3a)
+                repeat(3) { add(row[1]) } // Diagonal moves to 20-22
+                addAll(row.slice(7..14).asReversed()) // USB Line moves to 23-30
+
+                // Bottom left glyph of Phone (3a)
+                repeat(2) { add(row[6]) } // USB Dot moves to 31-32
+                repeat(3) { add(row[0]) } // Camera moves to 33-35
+            }.toShortArray()
+                .copyInto(transformedLightData, i * columns)
+        }
+        return CompositionLightData(transformedLightData, columns)
     }
 }
