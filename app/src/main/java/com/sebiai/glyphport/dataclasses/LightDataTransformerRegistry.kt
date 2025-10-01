@@ -111,7 +111,7 @@ object LightDataTransformerRegistry {
                 )
             ),
             LightDataTransformerCollection(
-                handles = PhoneModel.PHONE2A,
+                handles = PhoneModel.PHONE2A_PLUS,
                 outputs = PhoneModel.PHONE3,
                 transformers = listOf(
                     DefaultPhone2aPlusToPhone3LightDataTransformer(),
