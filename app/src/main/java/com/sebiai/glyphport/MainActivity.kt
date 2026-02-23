@@ -19,6 +19,7 @@ import com.sebiai.glyphport.composables.AppTopAppBar
 import com.sebiai.glyphport.navigation.AppNavHost
 import com.sebiai.glyphport.navigation.getTitleForRoute
 import com.sebiai.glyphport.navigation.routes.StartNavRoute
+import com.sebiai.glyphport.navigation.routes.navigateToAboutScreen
 import com.sebiai.glyphport.ui.theme.GlyphPortTheme
 
 // TODO: Implement GitHub update checking
@@ -44,10 +45,12 @@ fun MainActivityContent(
 
     // App bar state
     var appBarShowBackArrow by remember { mutableStateOf(false) }
+    var appBarShowMoreOptions by remember { mutableStateOf(false) }
     var appBarTitle by remember { mutableStateOf("") }
 
     navController.addOnDestinationChangedListener { controller, destination, arguments ->
         appBarShowBackArrow = controller.previousBackStackEntry != null
+        appBarShowMoreOptions = !appBarShowBackArrow
         destination.route?.let { route ->
             appBarTitle = getTitleForRoute(controller.context, route)
         }
@@ -61,7 +64,9 @@ fun MainActivityContent(
                 showBackArrow = appBarShowBackArrow,
                 onBackArrowPressed = {
                     navController.popBackStack()
-                }
+                },
+                showMoreOptions = appBarShowMoreOptions,
+                onOptionAboutPressed = { navController.navigateToAboutScreen() }
             )
         }
     ) { innerPadding ->

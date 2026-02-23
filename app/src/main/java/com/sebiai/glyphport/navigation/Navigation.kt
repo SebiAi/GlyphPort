@@ -14,11 +14,13 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.sebiai.glyphport.AppViewModel
 import com.sebiai.glyphport.R
+import com.sebiai.glyphport.navigation.routes.AboutNavRoute
 import com.sebiai.glyphport.navigation.routes.PortingNavRoute
 import com.sebiai.glyphport.navigation.routes.PortingSuccessNavRoute
 import com.sebiai.glyphport.navigation.routes.StartNavRoute
 import com.sebiai.glyphport.navigation.routes.TransformerCollectionSelectionNavRoute
 import com.sebiai.glyphport.navigation.routes.TransformerSelectionNavRoute
+import com.sebiai.glyphport.navigation.routes.aboutScreenDestination
 import com.sebiai.glyphport.navigation.routes.navigateToPortingScreen
 import com.sebiai.glyphport.navigation.routes.navigateToPortingSuccessScreenWithPopUp
 import com.sebiai.glyphport.navigation.routes.navigateToStartScreenWithPopUp
@@ -40,6 +42,7 @@ fun getTitleForRoute(context: Context, route: String): String {
         TransformerSelectionNavRoute::class.qualifiedName!! -> R.string.top_app_bar_title_transformer_selection_screen
         PortingNavRoute::class.qualifiedName!! -> R.string.top_app_bar_title_porting_screen
         PortingSuccessNavRoute::class.qualifiedName!! -> R.string.app_name
+        AboutNavRoute::class.qualifiedName!! -> R.string.top_app_bar_title_about_screen
         else -> null
     }
     return titleRes?.let { context.getString(titleRes) }?: ""
@@ -119,6 +122,6 @@ fun AppNavHost(
                 )
             },
         )
-        // TODO: Implement About screen reachable through the TopAppBar
+        aboutScreenDestination()
     }
 }

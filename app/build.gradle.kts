@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.aboutLibraries)
 }
 
 android {
@@ -37,6 +38,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -55,6 +57,11 @@ dependencies {
     // FFmpegKit
     implementation(files("libs/ffmpeg-kit-audio-lgpl-16kb-all_arch.aar"))
     implementation(libs.smart.exception)
+    // Drawable to Painter adapter
+    implementation(libs.accompanist.drawablepainter)
+    // In app oos license displaying
+    implementation(libs.aboutlibraries.core)
+    implementation(libs.aboutlibraries.compose.m3) // Material 3
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
@@ -64,4 +71,10 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+}
+
+aboutLibraries {
+    collect {
+        configPath = file("../config")
+    }
 }

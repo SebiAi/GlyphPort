@@ -5,13 +5,17 @@
     <string name="top_app_bar_title_transformer_group_selection_screen">Device selection</string>
     <string name="top_app_bar_title_transformer_selection_screen">Porting mode selection</string>
     <string name="top_app_bar_title_porting_screen">Confirm Porting</string>
+    <string name="top_app_bar_title_about_screen">About GlyphPort</string>
 
     <!-- General -->
     <string name="ok_confirmation">OK</string>
     <string name="next_action">Next</string>
+    <string name="about">About</string>
 
     <!-- Content description stuff -->
     <string name="content_description_top_app_bar_back_arrow_icon">Navigate up</string>
+    <string name="content_description_top_app_bar_more_options_icon">More options</string>
+    <string name="content_description_app_icon">App Icon</string>
 
     <!-- Composition validation -->
     <string name="composition_validation_io_error">Could not read the file. Please try again.\nIf this error persists, please contact the developer.</string>
@@ -47,6 +51,10 @@
     <string name="sharing_composition_picker_title">Share composition using</string>
     <string name="share_action">Share</string>
     <string name="port_another_composition">Port another</string>
+
+    <!-- About Screen -->
+    <string name="donate">Donate</string>
+    <string name="github">Github</string>
 
     <!-- Table Stuff -->
     <string name="file_title_table_heading">Title</string>
