@@ -41,7 +41,8 @@ fun AppTopAppBar(
                 exit = shrinkHorizontally() + fadeOut()
             ) {
                 IconButton(
-                    onClick = onBackArrowPressed
+                    onClick = onBackArrowPressed,
+                    enabled = showBackArrow
                 ) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Default.ArrowBack,
