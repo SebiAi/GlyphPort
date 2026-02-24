@@ -39,10 +39,10 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
       run: |
-          $ANDROID_HOME/build-tools/36.0.0/apksigner sign --ks keystore.jks --ks-key-alias $KEY_ALIAS --ks-pass env:KEYSTORE_PASSWORD --key-pass env:KEY_PASSWORD app/build/outputs/apk/release/app-release-unsigned.apk
+          $ANDROID_HOME/build-tools/36.0.0/apksigner sign --ks keystore.jks --ks-key-alias $KEY_ALIAS --ks-pass env:KEYSTORE_PASSWORD --key-pass env:KEY_PASSWORD --out app-release.apk app/build/outputs/apk/release/app-release-unsigned.apk
 
     - name: Upload artifact
       uses: actions/upload-artifact@v6
       with:
         name: GlyphPort-release-apk
-        path: app/build/outputs/apk/release/app-release.apk
+        path: app-release.apk
