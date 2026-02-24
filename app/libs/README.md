@@ -1,0 +1,1 @@
+Since ffmpeg-kit is discontinued, does originally not support 16KB page alignment and is notoriously difficult to build from source, I have precompiled it with a self made docker image. Source: https://github.com/SebiAi/ffmpeg-kit-16KB/
