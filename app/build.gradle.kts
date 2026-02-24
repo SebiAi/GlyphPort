@@ -16,6 +16,7 @@ android {
         applicationId = "com.sebiai.glyphport"
         minSdk = 31
         targetSdk = 36
+        // Don't forget to change on version update!
         versionCode = 1
         versionName = "1.0.0"
 
@@ -24,7 +25,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
