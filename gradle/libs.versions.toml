@@ -1,4 +1,5 @@
 [versions]
+# Wait for stable v14 release of AboutLibraries before AGP 9 upgrade
 agp = "8.13.2"
 kotlin = "2.3.10"
 coreKtx = "1.17.0"
@@ -13,6 +14,9 @@ smartException = "0.2.1"
 kotlinxCoroutinesTest = "1.10.2"
 accompanistDrawablepainter = "0.37.3"
 
+# Depends on AGP 8. At the time of writing only the beta supports AGP 9.
+# When upgrading to AGP 9 or when enabling "optimized resource shrinking":
+# https://github.com/mikepenz/AboutLibraries#optimized-resource-shrinking--agp-90
 aboutLibraries = "13.2.1"
 
 [libraries]
