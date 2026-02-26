@@ -145,6 +145,31 @@ private fun AboutScreen(
                                 }
                             }
                         }
+                        Row (
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            OutlinedButton (
+                                onClick = {
+                                    uriHandler.openUri("https://discord.gg/EmcnHqDxZt")
+                                },
+                                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+                            ) {
+                                Row (
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    Icon(
+                                        modifier = Modifier.size(24.dp),
+                                        painter = painterResource(R.drawable.discord_symbol_white),
+                                        contentDescription = null
+                                    )
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        stringResource(R.string.discord).uppercase(Locale.getDefault())
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }

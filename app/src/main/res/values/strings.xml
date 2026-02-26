@@ -55,6 +55,7 @@
     <!-- About Screen -->
     <string name="donate">Donate</string>
     <string name="github">Github</string>
+    <string name="discord">Discord</string>
 
     <!-- Table Stuff -->
     <string name="file_title_table_heading">Title</string>
