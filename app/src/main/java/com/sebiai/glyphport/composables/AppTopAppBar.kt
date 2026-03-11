@@ -7,19 +7,14 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkHorizontally
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.outlined.MoreVert
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material.icons.outlined.Info
+import androidx.compose.material.icons.outlined.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,12 +27,12 @@ fun AppTopAppBar(
     modifier: Modifier = Modifier,
     title: String,
     showBackArrow: Boolean,
-    onBackArrowPressed: () -> Unit,
-    showMoreOptions: Boolean,
-    onOptionAboutPressed: () -> Unit
+    onBackAction: () -> Unit,
+    showAboutAction: Boolean,
+    onAboutAction: () -> Unit,
+    showSettingsAction: Boolean,
+    onSettingsAction: () -> Unit
 ) {
-    var dropdownExpanded by remember { mutableStateOf(false) }
-
     TopAppBar(
         modifier = modifier,
         title = {
@@ -52,7 +47,7 @@ fun AppTopAppBar(
                 exit = shrinkHorizontally() + fadeOut()
             ) {
                 IconButton(
-                    onClick = onBackArrowPressed,
+                    onClick = onBackAction,
                     enabled = showBackArrow
                 ) {
                     Icon(
@@ -64,51 +59,37 @@ fun AppTopAppBar(
         },
         actions = {
             AnimatedVisibility(
-                visible = showMoreOptions,
+                visible = showSettingsAction,
                 enter = fadeIn() + expandHorizontally(),
                 exit = shrinkHorizontally() + fadeOut()
             ) {
                 IconButton(
-                    onClick = { dropdownExpanded = !dropdownExpanded },
-                    enabled = showMoreOptions
+                    onClick = onSettingsAction,
+                    enabled = showSettingsAction
                 ) {
                     Icon(
-                        imageVector = Icons.Outlined.MoreVert,
-                        contentDescription = stringResource(R.string.content_description_top_app_bar_more_options_icon)
+                        imageVector = Icons.Outlined.Settings,
+                        contentDescription = null // TODO: Settings content description
                     )
-                    AppDropdownMenu(
-                        expanded = dropdownExpanded,
-                        onDismissRequest = { dropdownExpanded = false },
-                        onOptionAboutPressed = onOptionAboutPressed
+                }
+            }
+            AnimatedVisibility(
+                visible = showAboutAction,
+                enter = fadeIn() + expandHorizontally(),
+                exit = shrinkHorizontally() + fadeOut()
+            ) {
+                IconButton(
+                    onClick = onAboutAction,
+                    enabled = showAboutAction
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Info,
+                        contentDescription = stringResource(R.string.content_description_top_app_bar_more_options_icon) // TODO: CHANGE!
                     )
                 }
             }
         }
     )
-}
-
-@Composable
-private fun AppDropdownMenu(
-    expanded: Boolean,
-    onDismissRequest: () -> Unit,
-    onOptionAboutPressed: () -> Unit
-) {
-    DropdownMenu(
-        expanded = expanded,
-        onDismissRequest = onDismissRequest
-    ) {
-        DropdownMenuItem(
-            text = {
-                Text(
-                    text = stringResource(R.string.about)
-                )
-            },
-            onClick = {
-                onDismissRequest()
-                onOptionAboutPressed()
-            }
-        )
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -119,9 +100,11 @@ private fun MyTopAppBarDefaultPreview() {
         AppTopAppBar(
             title = "AppBar",
             showBackArrow = false,
-            onBackArrowPressed = {},
-            showMoreOptions = false,
-            onOptionAboutPressed = {}
+            onBackAction = {},
+            showAboutAction = false,
+            onAboutAction = {},
+            showSettingsAction = false,
+            onSettingsAction = {}
         )
     }
 }
@@ -134,9 +117,11 @@ private fun MyTopAppBarWitAllVisiblePreview() {
         AppTopAppBar(
             title = "AppBar",
             showBackArrow = true,
-            onBackArrowPressed = {},
-            showMoreOptions = true,
-            onOptionAboutPressed = {}
+            onBackAction = {},
+            showAboutAction = true,
+            onAboutAction = {},
+            showSettingsAction = true,
+            onSettingsAction = {}
         )
     }
 }

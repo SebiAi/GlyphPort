@@ -48,14 +48,34 @@ fun MainActivityContent(
 
     // App bar state
     var appBarShowBackArrow by remember { mutableStateOf(false) }
-    var appBarShowMoreOptions by remember { mutableStateOf(false) }
+    var appBarShowAboutAction by remember { mutableStateOf(false) }
+    var appBarShowSettingsAction by remember { mutableStateOf(false) }
     var appBarTitle by remember { mutableStateOf("") }
 
     navController.addOnDestinationChangedListener { controller, destination, arguments ->
         appBarShowBackArrow = controller.previousBackStackEntry != null
-        appBarShowMoreOptions = !appBarShowBackArrow
+
+
         destination.route?.let { route ->
-            appBarTitle = getTitleForRoute(controller.context, route)
+            // routes have the qualifiedName of the class plus a url like arguments
+            // when a data class is used
+            val routeQualifiedName = route.substringBefore('/')
+            appBarTitle = getTitleForRoute(controller.context, routeQualifiedName)
+
+            appBarShowSettingsAction = when (routeQualifiedName) {
+                AboutNavRoute::class.qualifiedName!! -> false
+                // TODO: Add settings route
+                PortingNavRoute::class.qualifiedName!! -> false
+                // TODO: Enable settings icon in app bar
+                else -> false
+            }
+            appBarShowAboutAction = when (routeQualifiedName) {
+                AboutNavRoute::class.qualifiedName!! -> false
+                // TODO: Add settings route
+                PortingNavRoute::class.qualifiedName!! -> false
+                else -> true
+            }
+
         }
     }
 
@@ -65,11 +85,13 @@ fun MainActivityContent(
             AppTopAppBar(
                 title = appBarTitle,
                 showBackArrow = appBarShowBackArrow,
-                onBackArrowPressed = {
+                onBackAction = {
                     navController.popBackStack()
                 },
-                showMoreOptions = appBarShowMoreOptions,
-                onOptionAboutPressed = { navController.navigateToAboutScreen() }
+                showAboutAction = appBarShowAboutAction,
+                onAboutAction = { navController.navigateToAboutScreen() },
+                showSettingsAction = appBarShowSettingsAction,
+                onSettingsAction = { /* TODO: Implement */ }
             )
         }
     ) { innerPadding ->

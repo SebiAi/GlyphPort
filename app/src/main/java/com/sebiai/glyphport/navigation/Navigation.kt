@@ -32,10 +32,7 @@ import com.sebiai.glyphport.navigation.routes.startScreenDestination
 import com.sebiai.glyphport.navigation.routes.transformerCollectionSelectionScreenDestination
 import com.sebiai.glyphport.navigation.routes.transformerSelectionScreenDestination
 
-fun getTitleForRoute(context: Context, route: String): String {
-    // routes have the qualifiedName of the class plus a url like arguments
-    // when a data class is used
-    val routeQualifiedName = route.substringBefore('/')
+fun getTitleForRoute(context: Context, routeQualifiedName: String): String {
     val titleRes = when (routeQualifiedName) {
         StartNavRoute::class.qualifiedName!! -> R.string.app_name
         TransformerCollectionSelectionNavRoute::class.qualifiedName!! -> R.string.top_app_bar_title_transformer_group_selection_screen
