@@ -111,7 +111,7 @@ private fun AboutScreen(
                             Box(
                                 modifier = Modifier.clickable(
                                     onClick = {
-                                        uriHandler.openUri("https://github.com/SebiAi/GlyphPort/releases/latest")
+                                        uriHandler.openUri("https://github.com/SebiAi/GlyphPort/releases")
                                     },
                                     role = Role.Button
                                 )
