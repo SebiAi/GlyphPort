@@ -53,6 +53,7 @@
     <string name="port_another_composition">Port another</string>
 
     <!-- About Screen -->
+    <string name="update_check_action">Check for updates</string>
     <string name="donate">Donate</string>
     <string name="github">Github</string>
     <string name="discord">Discord</string>

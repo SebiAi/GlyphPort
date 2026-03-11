@@ -2,7 +2,9 @@ package com.sebiai.glyphport.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -29,6 +31,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.drawablepainter.rememberDrawablePainter
@@ -46,16 +51,18 @@ import java.util.Locale
 
 @Composable
 fun AboutScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    showCheckUpdateAction: Boolean = true
 ) {
     val libraries by produceLibraries(R.raw.aboutlibraries)
-    AboutScreen(modifier = modifier, libraries = libraries)
+    AboutScreen(modifier = modifier, libraries = libraries, showCheckUpdateAction = showCheckUpdateAction)
 }
 
 @Composable
 private fun AboutScreen(
     modifier: Modifier = Modifier,
-    libraries: Libs?
+    libraries: Libs?,
+    showCheckUpdateAction: Boolean
 ) {
     val context = LocalContext.current
     val appIcon = context.applicationInfo.loadIcon(context.packageManager)
@@ -100,76 +107,71 @@ private fun AboutScreen(
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6F)
                         )
-                        Row (
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceEvenly
-                        ) {
-                            Button (
-                                onClick = {
-                                    uriHandler.openUri("https://ko-fi.com/sebiai")
-                                },
-                                colors = ButtonDefaults.buttonColors(
-                                    containerColor = MaterialTheme.colorScheme.secondary
+                        if (showCheckUpdateAction) {
+                            Box(
+                                modifier = Modifier.clickable(
+                                    onClick = {
+                                        uriHandler.openUri("https://github.com/SebiAi/GlyphPort/releases/latest")
+                                    },
+                                    role = Role.Button
                                 )
                             ) {
-                                Row (
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Outlined.VolunteerActivism,
-                                        contentDescription = null
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = stringResource(R.string.donate).uppercase(Locale.getDefault())
-                                    )
-                                }
-                            }
-                            OutlinedButton (
-                                onClick = {
-                                    uriHandler.openUri("https://github.com/SebiAi/GlyphPort/")
-                                },
-                                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
-                            ) {
-                                Row (
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Icon(
-                                        modifier = Modifier.size(24.dp),
-                                        painter = painterResource(R.drawable.github_invertocat_white),
-                                        contentDescription = null
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        stringResource(R.string.github).uppercase(Locale.getDefault())
-                                    )
-                                }
+                                Text(
+                                    modifier = Modifier.padding(4.dp),
+                                    text = stringResource(R.string.update_check_action),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = FontWeight.Bold,
+                                    textDecoration = TextDecoration.Underline
+                                )
                             }
                         }
                         Row (
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceEvenly
                         ) {
-                            OutlinedButton (
+                            AboutFilledIconButton(
+                                onClick = {
+                                    uriHandler.openUri("https://ko-fi.com/sebiai")
+                                },
+                                icon = {
+                                    Icon(
+                                        imageVector = Icons.Outlined.VolunteerActivism,
+                                        contentDescription = null
+                                    )
+                                },
+                                text = stringResource(R.string.donate).uppercase(Locale.getDefault())
+                            )
+                            AboutOutlinedIconButton(
+                                onClick = {
+                                    uriHandler.openUri("https://github.com/SebiAi/GlyphPort/")
+                                },
+                                icon = {
+                                    Icon(
+                                        modifier = Modifier.size(24.dp),
+                                        painter = painterResource(R.drawable.github_invertocat_white),
+                                        contentDescription = null
+                                    )
+                                },
+                                text = stringResource(R.string.github).uppercase(Locale.getDefault())
+                            )
+                        }
+                        Row (
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly
+                        ) {
+                            AboutOutlinedIconButton(
                                 onClick = {
                                     uriHandler.openUri("https://discord.gg/EmcnHqDxZt")
                                 },
-                                border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
-                            ) {
-                                Row (
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
+                                icon = {
                                     Icon(
                                         modifier = Modifier.size(24.dp),
                                         painter = painterResource(R.drawable.discord_symbol_white),
                                         contentDescription = null
                                     )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        stringResource(R.string.discord).uppercase(Locale.getDefault())
-                                    )
-                                }
-                            }
+                                },
+                                text = stringResource(R.string.discord).uppercase(Locale.getDefault())
+                            )
                         }
                     }
                 }
@@ -177,6 +179,56 @@ private fun AboutScreen(
         },
         licenseDialogConfirmText = stringResource(R.string.ok_confirmation)
     )
+}
+
+@Composable
+private fun AboutFilledIconButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    icon: @Composable () -> Unit,
+    text: String
+) {
+    Button (
+        modifier = modifier,
+        onClick = onClick,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.secondary
+        )
+    ) {
+        Row (
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            icon()
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = text
+            )
+        }
+    }
+}
+
+@Composable
+private fun AboutOutlinedIconButton(
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit,
+    icon: @Composable () -> Unit,
+    text: String
+) {
+    OutlinedButton(
+        modifier = modifier,
+        onClick = onClick,
+        border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            icon()
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = text
+            )
+        }
+    }
 }
 
 @Preview
@@ -187,7 +239,8 @@ private fun AboutScreenPreview() {
             AboutScreen(
                 modifier = screenPaddingModifier
                     .fillMaxSize(),
-                libraries = fakeData
+                libraries = fakeData,
+                showCheckUpdateAction = true
             )
         }
     }
