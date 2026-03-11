@@ -1,0 +1,3 @@
+Mit GlyphPort können Sie Glyph Kompositionen über eine einfache, benutzerfreundliche Oberfläche von einem Nothing™ Handy zu einem anderen übersetzen. Egal, ob Sie zu einem neuen Nothing™ Handy wechseln oder Ihre einzigartigen Kreationen mit Freunden teilen möchten, GlyphPort ist genau das Richtige für Sie.
+
+All dies geschieht vollständig offline auf Ihrem Gerät und die App ist völlig kostenlos und Open Source.
