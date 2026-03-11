@@ -13,16 +13,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.sebiai.glyphport.composables.AppTopAppBar
 import com.sebiai.glyphport.navigation.AppNavHost
 import com.sebiai.glyphport.navigation.getTitleForRoute
+import com.sebiai.glyphport.navigation.routes.AboutNavRoute
+import com.sebiai.glyphport.navigation.routes.PortingNavRoute
 import com.sebiai.glyphport.navigation.routes.StartNavRoute
 import com.sebiai.glyphport.navigation.routes.navigateToAboutScreen
 import com.sebiai.glyphport.ui.theme.GlyphPortTheme
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Implement GitHub update checking
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +41,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainActivityContent(
     modifier: Modifier = Modifier,
-    appViewModel: AppViewModel = viewModel()
+    appViewModel: AppViewModel = hiltViewModel()
 ) {
     // Navigation
     val navController = rememberNavController()

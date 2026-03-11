@@ -4,6 +4,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.google.devtools.ksp)
+    alias(libs.plugins.google.dagger.hilt.android)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.aboutLibraries)
 }
@@ -62,6 +64,14 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.material.icons.extended)
+    // Hilt - dependency injection
+    implementation(libs.androidx.hilt.lifecycle.viewmodel)
+    implementation(libs.google.dagger.hilt.android)
+    ksp(libs.google.dagger.hilt.android.compiler)
+    // Datastore
+    implementation(libs.androidx.datastore)
+    // Json serialization for navigation routes and datastore
+    implementation(libs.kotlinx.serialization.json)
     // FFmpegKit
     implementation(files("libs/ffmpeg-kit-audio-lgpl-16kb-all_arch.aar"))
     implementation(libs.smart.exception)
