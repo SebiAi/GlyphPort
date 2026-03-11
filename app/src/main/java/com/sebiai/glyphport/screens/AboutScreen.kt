@@ -103,7 +103,7 @@ private fun AboutScreen(
                             fontWeight = FontWeight.SemiBold
                         )
                         Text(
-                            text = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
+                            text = "v${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.6F)
                         )
