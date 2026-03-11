@@ -92,7 +92,8 @@ private fun AboutScreen(
                         )
                         Text(
                             text = stringResource(R.string.app_name),
-                            style = MaterialTheme.typography.titleLarge
+                            style = MaterialTheme.typography.titleLarge,
+                            fontWeight = FontWeight.SemiBold
                         )
                         Text(
                             text = "${BuildConfig.VERSION_NAME} (${BuildConfig.VERSION_CODE})",
