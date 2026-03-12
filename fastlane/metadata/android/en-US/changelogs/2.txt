@@ -1,0 +1,1 @@
+Fix bug where the top app bar would not work as expected (missing title and wrong actions visible on certain screens) due to minification. Minification has been disabled for now.

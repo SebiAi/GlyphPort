@@ -1,0 +1,1 @@
+Fehler behoben, bei dem die obere App-Leiste aufgrund der Minifizierung nicht wie erwartet funktionierte (fehlender Titel und falsche Aktionen auf bestimmten Bildschirmen). Die Minifizierung wurde vorerst deaktiviert.
