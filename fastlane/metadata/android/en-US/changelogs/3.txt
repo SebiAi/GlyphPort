@@ -1,0 +1,3 @@
+• <b>Reduce app size by almost <i>65%</i></b> by switching from <i>ffmpeg-kit</i> to a <i>taglib</i> implementation for audio metadata extraction and manipulation.
+• Comply with F-Droid's inclusion policies by building <i>taglib</i> from source, instead of using precompiled binaries (<i>ffmpeg-kit</i>) like before.
+• Fix 16KB page alignment due to a bug in <i>androidx.datastore.datastore</i>.

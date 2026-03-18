@@ -1,0 +1,3 @@
+• <b>Reduzierung der App-Größe um fast <i>65%</i></b> durch den Wechsel von <i>ffmpeg-kit</i> zu einer <i>taglib</i> Implementierung für das Lesen und Schreiben von Audio-Metadaten.
+• Befolgen der Aufnahmekriterien von F-Droid durch Kompilierung von <i>taglib</i> aus dem Quellcode, anstatt vorgefertigte Binärdateien (<i>ffmpeg-kit</i>) wie zuvor zu verwenden.
+• Behebung des Problems mit 16KB page alignment, das auf einen Fehler in <i>androidx.datastore.datastore</i> zurückzuführen war.
