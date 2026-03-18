@@ -1,0 +1,1 @@
+• Fix reproducible builds for F-Droid by disabling build-id generation in the linker for native libraries, using Java 21 for compilation and updating the <i>apksigner</i> command to preserve alignment for build-tools >= 35.0.0-rc1.

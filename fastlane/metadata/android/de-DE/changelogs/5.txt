@@ -1,0 +1,1 @@
+• Reproducible builds wieder möglich machen für F-Droid indem build-id Generation im Linker für native Bibliotheken deaktiviert wird, Java 21 für den Kompiliervorgang verwendet wird und der <i>apksigner</i> Befehl aktualisiert wird um alignment für build-tools >= 35.0.0-rc1 zu bewahren.
