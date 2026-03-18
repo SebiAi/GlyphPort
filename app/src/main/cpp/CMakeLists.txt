@@ -6,6 +6,10 @@ project(
     VERSION 2.0.0
 )
 
+# Do not generate a build-id because of reproducible builds
+# See https://f-droid.org/en/docs/Reproducible_Builds#ndk-build-id
+add_link_options("LINKER:--build-id=none")
+
 # TagLib Configuration
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build Shared Libraries" FORCE)
 set(BUILD_TESTING OFF CACHE BOOL "Build Tests" FORCE)
