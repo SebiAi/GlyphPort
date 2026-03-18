@@ -1,0 +1,2 @@
+• Sonstiges: Plugin <i>org.gradle.toolchains.foojay-resolver</i> entfernt, da es nicht benötigt wird und F-Droid eine Fehlermeldung während des Builds ausgibt.
+• Sonstiges: Die NDK-Version für den nativen Build von <i>taglib</i> explizit festlegen.

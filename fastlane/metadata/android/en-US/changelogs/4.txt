@@ -1,0 +1,2 @@
+• Misc: Remove <i>org.gradle.toolchains.foojay-resolver</i> plugin, as it is not needed and F-Droid complains about it during build.
+• Misc: Define NDK version explicitly for <i>taglib</i> native build.
