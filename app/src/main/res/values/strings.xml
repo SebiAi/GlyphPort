@@ -72,5 +72,5 @@
     <string name="testing_light_data_transformer_description">A testing port of the composition.</string>
 
     <!-- Other -->
-    <string name="file_name_ported_to_phone_model">Ported to %s</string>
+    <string name="file_name_ported_to_phone_model">%s Port</string>
 </resources>

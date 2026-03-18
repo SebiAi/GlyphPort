@@ -112,9 +112,10 @@ fun PortingScreen(
                 portingInProgress = true
 
                 lifecycleOwner.lifecycleScope.launch {
+                    val phonePortString = context.getString(R.string.file_name_ported_to_phone_model, transformer.outputs.phoneName)
                     val transformedLightData = transformer.transform(composition.lightData)
                     val newMetadata = DecodedCompositionMetadata(
-                        title = "${composition.metadata.title} - Ported to ${transformer.outputs.phoneName}",
+                        title = "${composition.metadata.title} - $phonePortString",
                         album = getAppNameWithMajorVersion(context),
                         composer = "v1-${transformer.outputs.build} Glyph Composer",
                         authorLightData = transformedLightData,
@@ -128,7 +129,7 @@ fun PortingScreen(
                     )
 
                     val oldFile = File(getFileName(context.contentResolver, composition.uri))
-                    val newFileName = "${oldFile.nameWithoutExtension}_${context.getString(R.string.file_name_ported_to_phone_model, transformer.outputs.phoneName)}-${transformer.getName(context)}.${oldFile.extension}"
+                    val newFileName = "${oldFile.nameWithoutExtension}_$phonePortString-${transformer.getName(context)}.${oldFile.extension}"
                     val newCompositionDetails = ContentValues().apply {
                         // If the file already exists, it will automatically get a suffix - yay
                         // At least until some point - after 32 files it throws when going from pending
