@@ -1,0 +1,16 @@
+{
+  "uniqueId": "libtag",
+  "developers": [
+    {"name":"Scott Wheeler (scotchi)"},
+    {"name":"Urs Fleisch (ufleisch)"},
+    {"name":"Lukáš Lalinský (lalinsky)"}
+  ],
+  "artifactVersion": "v2.2.1",
+  "description": "TagLib is a library for reading and editing the metadata of several popular audio formats.",
+  "name": "TagLib Audio Meta-Data Library",
+  "website": "https://github.com/taglib/taglib/tree/v2.2.1",
+  "licenses": [
+    "LGPL-2.1-only",
+    "MPL-1.1"
+  ]
+}

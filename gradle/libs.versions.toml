@@ -13,7 +13,6 @@ googleDaggerHiltAndroid = "2.58"
 navigationCompose = "2.9.7"
 datastore = "1.2.0"
 kotlinxSerializationJson = "1.10.0"
-smartException = "0.2.1"
 kotlinxCoroutinesTest = "1.10.2"
 accompanistDrawablepainter = "0.37.3"
 
@@ -53,9 +52,6 @@ androidx-material-icons-extended = { group = "androidx.compose.material", name =
 androidx-datastore =  { group = "androidx.datastore", name = "datastore", version.ref = "datastore" }
 # Json serialization
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
-
-# FFmpegKit dependency
-smart-exception = { group = "com.arthenica", name = "smart-exception-java", version.ref = "smartException" }
 
 # Coroutines testing
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }

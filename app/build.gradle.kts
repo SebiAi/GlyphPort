@@ -23,6 +23,20 @@ android {
         versionName = "1.0.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        
+        externalNativeBuild {
+            cmake {
+                cppFlags("-std=c++17")
+                arguments += listOf("-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON")
+            }
+        }
+    }
+
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/cpp/CMakeLists.txt")
+            version = "3.22.1"
+        }
     }
 
     buildTypes {
@@ -72,9 +86,6 @@ dependencies {
     implementation(libs.androidx.datastore)
     // Json serialization for navigation routes and datastore
     implementation(libs.kotlinx.serialization.json)
-    // FFmpegKit
-    implementation(files("libs/ffmpeg-kit-audio-lgpl-16kb-all_arch.aar"))
-    implementation(libs.smart.exception)
     // Drawable to Painter adapter
     implementation(libs.accompanist.drawablepainter)
     // In app oos license displaying

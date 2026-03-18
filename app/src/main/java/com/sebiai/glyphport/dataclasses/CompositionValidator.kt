@@ -2,11 +2,9 @@ package com.sebiai.glyphport.dataclasses
 
 import android.content.Context
 import android.net.Uri
-import android.util.Log
-import com.arthenica.ffmpegkit.FFmpegKitConfig
-import com.arthenica.ffmpegkit.FFprobeKit
 import com.sebiai.glyphport.PhoneModel
-import com.sebiai.glyphport.safeHandleFFmpegKitSession
+import com.sebiai.glyphport.useTempFile
+import com.sebiai.glyphport.utils.OpusMetadataUtil
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -103,30 +101,24 @@ class CompositionValidator {
         }
 
         private fun getMetadata(context: Context, uri: Uri): EncodedCompositionMetadata {
-            var result = EncodedCompositionMetadata()
-
-            val filePath = FFmpegKitConfig.getSafParameterForRead(context, uri)
-            safeHandleFFmpegKitSession(
-                session = FFprobeKit.getMediaInformation(filePath),
-                onSuccess = { session ->
-                    val mediaInformation = session.mediaInformation
-                    val streams = mediaInformation.streams
-                    if (streams.size > 1) Log.w(TAG, "More than one stream in composition, using first opus stream")
-
-                    streams.firstOrNull { it.codec == "opus" }?.let { stream ->
-                        val tags = stream.tags
-                        result = EncodedCompositionMetadata(
-                            title = tags.optString("TITLE", ""),
-                            album = tags.optString("ALBUM", ""),
-                            composer = tags.optString("COMPOSER", ""),
-                            author = tags.optString("AUTHOR", ""),
-                            custom1 = tags.optString("CUSTOM1", ""),
-                            custom2 = tags.optString("CUSTOM2", "")
-                        )
-                    }
+            return uri.useTempFile(context) { tempFile ->
+                // Read metadata using native TagLib
+                val tags: Map<String, String>? = OpusMetadataUtil.readOpusMetadata(tempFile.absolutePath)
+                
+                if (tags == null) {
+                    throw Exception("Failed to read metadata or invalid file format")
                 }
-            )
-            return result
+
+                // If any critical field is missing, it will return empty string, caller handles validation
+                EncodedCompositionMetadata(
+                    title = tags["TITLE"] ?: "",
+                    album = tags["ALBUM"] ?: "",
+                    composer = tags["COMPOSER"] ?: "",
+                    author = tags["AUTHOR"] ?: "",
+                    custom1 = tags["CUSTOM1"] ?: "",
+                    custom2 = tags["CUSTOM2"] ?: ""
+                )
+            } ?: throw Exception("Failed to copy file")
         }
 
         /**

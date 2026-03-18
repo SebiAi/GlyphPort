@@ -2,15 +2,12 @@ package com.sebiai.glyphport.dataclasses
 
 import android.content.Context
 import android.net.Uri
-import com.arthenica.ffmpegkit.FFmpegKit
-import com.arthenica.ffmpegkit.FFmpegKitConfig
-import com.sebiai.glyphport.safeHandleFFmpegKitSession
+import android.util.Log
+import com.sebiai.glyphport.useTempFile
+import com.sebiai.glyphport.utils.OpusMetadataUtil
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
-import java.io.File
 
 class CompositionMetadataWriter(
     val audioFile: Uri,
@@ -18,69 +15,44 @@ class CompositionMetadataWriter(
     private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
     suspend fun write(context: Context, metadata: EncodedCompositionMetadata): Boolean = withContext(ioDispatcher) {
-        // Convert the metadata to ffmetadata (https://ffmpeg.org/ffmpeg-formats.html#ffmetadata)
-        // This data can then be piped to ffmpeg circumventing errors when passing
-        // long metadata via arguments due to command length limitations.
-        val metadata = arrayOf(
-            "TITLE" to metadata.title,
-            "ALBUM" to metadata.album,
-            "AUTHOR" to metadata.author,
-            "COMPOSER" to metadata.composer,
-            "CUSTOM1" to metadata.custom1,
-            "CUSTOM2" to metadata.custom2
-        )
-        val ffmetadataContent = metadata.joinToString(
-            separator = "\n",
-            prefix = ";FFMETADATA1\n",
-            postfix = "\n"
-        ) { (key, value) ->
-            "${escapeFFmetadata(key)}=${escapeFFmetadata(value)}"
-        }
+        return@withContext audioFile.useTempFile(context) { tempFile ->
+            // Prepare metadata arrays
+            val metaMap = mapOf(
+                "TITLE" to metadata.title,
+                "ALBUM" to metadata.album,
+                "AUTHOR" to metadata.author,
+                "COMPOSER" to metadata.composer,
+                "CUSTOM1" to metadata.custom1,
+                "CUSTOM2" to metadata.custom2
+            )
+            
+            val keys = metaMap.keys.toTypedArray()
+            val values = metaMap.values.toTypedArray()
 
-        val deferredFFmpegSuccess: Deferred<Boolean>
-        val pipe = FFmpegKitConfig.registerNewFFmpegPipe(context)
-        try {
-            // Construct command with pipe
-            val audioFileParam = FFmpegKitConfig.getSafParameterForRead(context, audioFile)
-            val outputFileParam = FFmpegKitConfig.getSafParameterForWrite(context, outputFile)
-            val ffmpegCommand = metadata.joinToString(
-                separator = " ",
-                prefix = "-i '$audioFileParam' -i $pipe ", // Inputs
-                postfix = " -map_metadata 1 -c:a copy -fflags +bitexact -flags:v +bitexact " +
-                        "-flags:a +bitexact '$outputFileParam'" // Copy metadata without pollution
-            ) { (key, _) ->
-                "-metadata:s:a:0 '$key='" // Clear all metadata we want to overwrite
+            // Write metadata using native TagLib
+            val success = OpusMetadataUtil.writeOpusMetadata(tempFile.absolutePath, keys, values)
+            
+            if (!success) {
+                Log.e("CompositionMetadataWriter", "Failed to write metadata to temp file")
+                return@useTempFile false
             }
 
-            // Execute async - we need to write to the pipe while ffmpeg is running
-            deferredFFmpegSuccess = async {
-                val session = FFmpegKit.execute(ffmpegCommand)
-                var success = false
-                safeHandleFFmpegKitSession(
-                    session,
-                    onSuccess = { success = true },
-                    onCancel = {  },
-                    onFailure = { }
-                )
-                return@async success
+            // Write temp file to output Uri
+            try {
+                context.contentResolver.openOutputStream(outputFile)?.use { output ->
+                     tempFile.inputStream().use { input ->
+                         input.copyTo(output)
+                     }
+                } ?: return@useTempFile false
+            } catch (e: Exception) {
+                 Log.e("CompositionMetadataWriter", "Failed to copy temp file to output", e)
+                 return@useTempFile false
             }
 
-            // Write ffmetadata to pipe
-            File(pipe).writeText(ffmetadataContent)
-        } finally {
-            FFmpegKitConfig.closeFFmpegPipe(pipe)
+            return@useTempFile true
+        } ?: run {
+             Log.e("CompositionMetadataWriter", "Failed to copy audio URI to temp file")
+             false
         }
-
-        return@withContext deferredFFmpegSuccess.await()
-    }
-
-    private fun escapeFFmetadata(content: String): String {
-        // Special characters need to be escaped with a backslash ('\', '=', ';', '#', '\n')
-        return content
-            .replace("""\""", """\\""")
-            .replace("""=""", """\=""")
-            .replace(""";""", """\;""")
-            .replace("""#""", """\#""")
-            .replace("\n", "\\\n")
     }
 }

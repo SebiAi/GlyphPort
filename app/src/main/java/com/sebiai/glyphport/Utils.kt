@@ -11,8 +11,6 @@ import android.util.Log
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.arthenica.ffmpegkit.AbstractSession
-import com.arthenica.ffmpegkit.ReturnCode
 import java.io.File
 
 val screenPaddingModifier = Modifier.padding(18.dp)
@@ -46,27 +44,35 @@ fun currentPhoneModel(): PhoneModel? {
     }
 }
 
-class FFmpegKitSessionFailureExeption(message: String): RuntimeException(message)
-fun <T: AbstractSession> safeHandleFFmpegKitSession(
-    session: T,
-    onSuccess: (T) -> Unit,
-    onCancel: (T) -> Unit = {},
-    onFailure: (T) -> Unit = { throw FFmpegKitSessionFailureExeption(it.failStackTrace ?: "Stack Trace was null") }
-) {
-    val tag = "FFmpegKitSessionHandler"
 
-    when (session.returnCode.value) {
-        ReturnCode.SUCCESS -> { onSuccess(session) }
-        ReturnCode.CANCEL -> {
-            Log.i(tag, "Command '${session.command}' canceled")
-            onCancel(session)
+
+fun createTempFileFromUri(context: Context, uri: Uri): File? {
+    try {
+        val inputStream = context.contentResolver.openInputStream(uri) ?: return null
+        val tempFile = File.createTempFile("temp_opus", ".ogg", context.cacheDir)
+        inputStream.use { input ->
+            tempFile.outputStream().use { output ->
+                input.copyTo(output)
+            }
         }
-        else -> {
-            Log.e(tag, "Command '${session.command}' failed with state ${session.state} and rc ${session.returnCode}.${session.failStackTrace}")
-            onFailure(session)
+        return tempFile
+    } catch (e: Exception) {
+        Log.e("Utils", "Error copying URI to temp file", e)
+        return null
+    }
+}
+
+inline fun <R> Uri.useTempFile(context: Context, block: (File) -> R): R? {
+    val tempFile = createTempFileFromUri(context, this) ?: return null
+    try {
+        return block(tempFile)
+    } finally {
+        if (tempFile.exists()) {
+            tempFile.delete()
         }
     }
 }
+
 
 fun getFileName(contentResolver: ContentResolver, uri: Uri): String {
     require(!uri.isRelative)
