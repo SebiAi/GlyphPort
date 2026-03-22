@@ -19,3 +19,12 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+
+
+# We check what route (aka.) screen is currently shown by checking if the route name
+# and the qualified class name of the route object match => we don't want name obfuscation
+-keep,allowoptimization,allowshrinking class com.sebiai.glyphport.navigation.routes.*
+
+# JNI is finicky because it uses string lookups, better not optimize
+-keep class com.sebiai.glyphport.utils.OpusMetadataUtil
