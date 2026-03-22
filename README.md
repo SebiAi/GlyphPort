@@ -1,4 +1,5 @@
 <div align="center">
+  <img width="150" height="150" alt="GlyphPort Logo" src="https://raw.githubusercontent.com/SebiAi/GlyphPort/main/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.webp">
   <p>
     <h1>GlyphPort</h1>
     <h6>Port Nothing® Glyph Compositions between phones</h6>
