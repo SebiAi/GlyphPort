@@ -1,0 +1,3 @@
+• <b>Reduce app size again by about <i>86%</i></b> by re-enabling app minification and resource shrinking.
+• Adjust app colors to use yellow instead of red for the second outline color.
+• Explicitly throw an exception when the screen title can not be resolved, instead of silently failing by showing an empty title.

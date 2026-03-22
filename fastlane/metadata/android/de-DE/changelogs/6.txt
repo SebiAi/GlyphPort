@@ -1,0 +1,3 @@
+• <b>Reduzierung der App-Größe um fast <i>86%</i></b> by re-enabling app minification and resource shrinking.
+• Anpassen der App-Farben sodass für die alternative Umrandungsfarbe Gelb anstelle von Rot verwendet wird.
+• Explizit eine Exception auslösen anstatt stillschweigend keinen Titel für den jetzigen Bildschirm anzuzeigen, wenn der Bildschirmtitel nicht aufgelöst werden kann.
