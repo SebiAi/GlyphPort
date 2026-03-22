@@ -42,7 +42,11 @@ fun getTitleForRoute(context: Context, routeQualifiedName: String): String {
         AboutNavRoute::class.qualifiedName!! -> R.string.top_app_bar_title_about_screen
         else -> null
     }
-    return titleRes?.let { context.getString(titleRes) }?: ""
+    if (titleRes == null) {
+        throw IllegalStateException("Title for nav route could not be found!")
+    }
+
+    return context.getString(titleRes)
 }
 
 @Composable
