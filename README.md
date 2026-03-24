@@ -20,7 +20,7 @@
 
 # :inbox_tray: Download
 > [!CAUTION]
-> The app does not have a self updating mechanism! Install it via the [**IzzyOnDroid** F-Droid repo](<https://izzyondroid.org/quickstart/>) or **Obtainium** to receive app updates!
+> The app does not have a self updating mechanism! Install it via an [F-Droid compatible store via the **IzzyOnDroid** F-Droid repo](<https://izzyondroid.org/quickstart/>) or **Obtainium** to receive app updates!
 
 <p align="center">
     <a href="https://apt.izzysoft.de/packages/com.sebiai.glyphport">
