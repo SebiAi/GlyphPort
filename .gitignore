@@ -313,3 +313,9 @@ obj/
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.toptal.com/developers/gitignore/api/androidstudio,kotlin,gradle,intellij,java
+
+.idea/androidTestResultsUserPreferences.xml
+.idea/deploymentTargetSelector.xml
+/*/release
+gradle/gradle-daemon-jvm.properties
+.sync-exclude.lst
