@@ -52,10 +52,10 @@ If you need help, join the Discord Server:
 This project should import straight into **Android Studio**.
 
 For command line building:  
-Make sure you have the Android SDK downloaded and that the `ANDROID_HOME` environment variable is set!
+Make sure you have the Android SDK downloaded and that the `ANDROID_HOME` environment variable is set! For reproducible builds use *gradle 8.13* and *Java OpenJDK 21* (`openjdk-21-jre-headless`). Gradle should automatically set up the required *NDK (29.0.14206865)* and *CMake (3.22.1)* versions for the native builds.
 ```sh
 # Build
 ./gradlew :app:clean :app:assembleRelease
 # Sign
-$ANDROID_HOME/build-tools/36.0.0/apksigner sign --ks keystore.jks --ks-key-alias $KEY_ALIAS --ks-pass env:KEYSTORE_PASSWORD --key-pass env:KEY_PASSWORD --out app-release.apk app/build/outputs/apk/release/app-release-unsigned.apk
+$ANDROID_HOME/build-tools/36.0.0/apksigner sign --ks keystore.jks --ks-key-alias $KEY_ALIAS --ks-pass env:KEYSTORE_PASSWORD --key-pass env:KEY_PASSWORD --alignment-preserved true --out app-release.apk app/build/outputs/apk/release/app-release-unsigned.apk
 ```
