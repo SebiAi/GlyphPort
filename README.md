@@ -20,7 +20,7 @@
 
 # :inbox_tray: Download
 > [!CAUTION]
-> **The app does not have a self updating mechanism! Install it via the [*official F-Droid app store*](<https://f-droid.org/>) or *Obtainium* to receive app updates!**
+> **The app does not have a self updating mechanism! Install it via an *F-Droid app store* ([F-Droid](<https://f-droid.org/>), [Droid-ify](<https://droidify.app/>), ...) or *Obtainium* to receive app updates!**
 
 <p align="center">
     <a href="https://f-droid.org/packages/com.sebiai.glyphport">
