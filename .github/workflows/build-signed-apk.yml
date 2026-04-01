@@ -3,8 +3,20 @@ name: Build signed APK
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - '**'
+      - '!**.md'
+      - '!fastlane/**'
+      - '!.github/**'
+      - '.github/workflows/build-signed-apk.yml'
   pull_request:
     branches: [ "main" ]
+    paths:
+      - '**'
+      - '!**.md'
+      - '!fastlane/**'
+      - '!.github/**'
+      - '.github/workflows/build-signed-apk.yml'
   workflow_dispatch:
 
 jobs:
