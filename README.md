@@ -6,7 +6,7 @@
     <a href="https://github.com/SebiAi/GlyphPort/releases/latest">
       <img alt="GitHub release (with filter)" src="https://img.shields.io/github/v/release/SebiAi/GlyphPort?label=Latest%20Stable%20Release">
     </a>
-    <a href="https://github.com/SebiAi/GlyphPort/blob/main/LICENSE">
+    <a href="https://spdx.org/licenses/GPL-3.0-only.html">
       <img alt="GitHub License" src="https://img.shields.io/github/license/SebiAi/GlyphPort">
     </a>
     <br><br>
