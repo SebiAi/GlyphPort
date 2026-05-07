@@ -16,7 +16,12 @@
       </a>
     </p>
   </p>
+
+  <a href="https://youtu.be/nH1dx7ShO4I">
+    <img width="3840" height="2160" alt="Watch GlyphPort introduction video" style="width:70%;height:auto;" src="https://github.com/user-attachments/assets/f7adbdb2-af4b-40d7-be97-e70134a375a4" />
+  </a>
 </div>
+
 
 # :inbox_tray: Download
 > [!CAUTION]
@@ -44,7 +49,7 @@ This repo is in no way, shape or form affiliated with Nothing Technology Limited
 # :interrobang: FAQ
 <details>
 <summary><h2>Why is GlyphPort not available on the Google Play Store?</h2> [Click Me]</summary>
-I do not want to support Google in tightening its grip on the Android platform (see <a href="https://keepandroidopen.org">Android Developer Verification</a> and my short take on it <a href="https://x.com/MLG360no_scope/status/2034887466461602218">here</a>) and I also do not want to providing ID and my living address.
+I do not want to support Google in tightening its grip on the Android platform (see <a href="https://keepandroidopen.org">Android Developer Verification</a> and my short take on it <a href="https://x.com/MLG360no_scope/status/2034887466461602218">here</a>). I also do not want to provide my ID and my living address.
 </details>
 
 # :safety_vest: Need help?
