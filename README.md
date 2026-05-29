@@ -22,6 +22,31 @@
   </a>
 </div>
 
+# :arrows_counterclockwise: Supported conversions
+<table>
+  <tr>
+    <th>From</th>
+    <th>To</th>
+  </tr>
+  <tr>
+    <td>Phone (1)</td>
+    <td>Phone (2), Phone (2a), Phone (2a) Plus, Phone (3a) / (3a) Pro, Phone (3)</td>
+  </tr>
+  <tr>
+    <td>Phone (2)</td>
+    <td>Phone (1), Phone (3)</td>
+  </tr>
+  <tr>
+    <td>Phone (2a)</td>
+    <td>Phone (3a) / (3a) Pro, Phone (3)</td>
+  </tr>
+  <tr>
+    <td>Phone (2a) Plus</td>
+    <td>Phone (3a) / (3a) Pro, Phone (3)</td>
+  </tr>
+</table>
+
+A conversion you want is missing? [Click here](#faq-conversion-not-available) for more info.
 
 # :inbox_tray: Download
 > [!CAUTION]
@@ -50,6 +75,13 @@ This repo is in no way, shape or form affiliated with Nothing Technology Limited
 <details>
 <summary><h2>Why is GlyphPort not available on the Google Play Store?</h2> [Click Me]</summary>
 I do not want to support Google in tightening its grip on the Android platform (see <a href="https://keepandroidopen.org">Android Developer Verification</a> and my short take on it <a href="https://x.com/MLG360no_scope/status/2034887466461602218">here</a>). I also do not want to provide my ID and my living address.
+</details>
+<a name="faq-conversion-not-available"></a>
+<details>
+<summary><h2>Why is a particular conversion not available?</h2> [Click Me]</summary>
+Either I have probably not come around to implementing one yet or implementing a generic conversion is difficult because it would depend too much on the composition.
+<br><br>
+For example: Phone (3a) has way more individually addressable leds (aka. Zones) than Phone (2a). Even if they look similar, trying to compress the extra Zones down is significantly more difficult and would look bad most of the time without manual tuning depending on the composition.
 </details>
 
 # :safety_vest: Need help?
